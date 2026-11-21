@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uzum Market — O'zbekistondagi milliy marketpleys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & RESET (UZUM MARKET VISUAL SYSTEM)
+       ========================================================================== */
+    :root {
+      --uzum-purple: #7000FF;
+      --uzum-purple-hover: #5E00D6;
+      --uzum-purple-soft: #E5E5FF;
+      --uzum-purple-soft-hover: #D4D4FF;
+      --uzum-purple-dark: #3B007D;
+      --uzum-yellow: #FFFF00;
+      --uzum-bg: #FFFFFF;
+      --uzum-surface: #F2F4F7;
+      --uzum-surface-hover: #E6E8ED;
+      --uzum-card-img-bg: #EFEFEF;
+      --uzum-text-main: #1F2026;
+      --uzum-text-secondary: #595B66;
+      --uzum-text-muted: #8B8E99;
+      --uzum-border: rgba(54, 54, 64, 0.14);
+      --uzum-border-strong: rgba(54, 54, 64, 0.25);
+      --uzum-green: #00A859;
+      --uzum-red: #FF3B30;
+      --uzum-gold: #FFB54C;
+      --container-max: 1240px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --shadow-sm: 0 2px 8px rgba(31, 32, 38, 0.06);
+      --shadow-md: 0 8px 24px rgba(31, 32, 38, 0.09);
+      --shadow-lg: 0 18px 44px rgba(31, 32, 38, 0.16);
+      --transition-fast: 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+      --transition-smooth: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--uzum-text-main);
+      background-color: var(--uzum-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.4;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       2. TOP UTILITY BAR (32px)
+       ========================================================================== */
+    .top-bar {
+      background-color: var(--uzum-surface);
+      height: 32px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(54, 54, 64, 0.06);
+    }
+
+    .top-bar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .top-bar-left, .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .city-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      color: var(--uzum-text-main);
+      transition: color var(--transition-fast);
+    }
+
+    .city-trigger:hover {
+      color: var(--uzum-purple);
+    }
+
+    .city-name-underline {
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .top-bar-link {
+      color: var(--uzum-text-secondary);
+      font-weight: 500;
+      transition: color var(--transition-fast);
+    }
+
+    .top-bar-link:hover {
+      color: var(--uzum-text-main);
+    }
+
+    .top-bar-link.purple {
+      color: var(--uzum-purple);
+    }
+
+    .top-bar-promo {
+      color: var(--uzum-text-muted);
+      font-size: 13px;
+    }
+
+    .lang-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--uzum-text-main);
+    }
+
+    .lang-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--uzum-purple-soft);
+      color: var(--uzum-purple);
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       3. STICKY MAIN HEADER (72px) & LIVE SEARCH
+       ========================================================================== */
+    .main-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(54, 54, 64, 0.08);
+    }
+
+    .header-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .uzum-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      transition: transform var(--transition-fast);
+    }
+
+    .uzum-logo:hover {
+      transform: scale(1.015);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--uzum-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--uzum-purple);
+    }
+
+    .logo-text span {
+      color: var(--uzum-text-main);
+      font-weight: 700;
+    }
+
+    /* Katalog Button */
+    .katalog-btn {
+      height: 40px;
+      padding: 0 18px;
+      border-radius: var(--radius-md);
+      background-color: var(--uzum-purple-soft);
+      color: var(--uzum-purple);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .katalog-btn:hover {
+      background-color: var(--uzum-purple-soft-hover);
+    }
+
+    .katalog-btn.active {
+      background-color: var(--uzum-purple);
+      color: #FFFFFF;
+    }
+
+    /* Search Box */
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--uzum-border-strong);
+      background: #FFFFFF;
+      overflow: hidden;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .search-form:focus-within {
+      border-color: var(--uzum-purple);
+      box-shadow: 0 0 0 3px rgba(112, 0, 255, 0.12);
+    }
+
+    .search-input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      outline: none;
+      padding: 0 14px;
+      font-size: 14px;
+      color: var(--uzum-text-main);
+      background: transparent;
+      min-width: 0;
+    }
+
+    .search-input::placeholder {
+      color: var(--uzum-text-muted);
+    }
+
+    .search-clear-btn {
+      padding: 0 8px;
+      color: var(--uzum-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--uzum-text-main);
+    }
+
+    .search-submit-btn {
+      width: 64px;
+      height: 100%;
+      background: var(--uzum-surface);
+      border-left: 1px solid rgba(54, 54, 64, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--uzum-text-main);
+      transition: background-color var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .search-submit-btn:hover {
+      background: var(--uzum-surface-hover);
+    }
+
+    /* Search Autocomplete Dropdown */
+    .search-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--uzum-border);
+      box-shadow: var(--shadow-lg);
+      z-index: 70;
+      overflow: hidden;
+      animation: dropdownFade 0.18s ease-out;
+    }
+
+    .search-dropdown-section {
+      padding: 14px;
+    }
+
+    .search-dropdown-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--uzum-text-muted);
+      margin-bottom: 10px;
+    }
+
+    .search-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .search-tag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--uzum-surface);
+      font-size: 13px;
+      color: var(--uzum-text-main);
+      transition: all var(--transition-fast);
+    }
+
+    .search-tag-btn:hover {
+      background: var(--uzum-purple-soft);
+      color: var(--uzum-purple);
+    }
+
+    .search-suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--uzum-surface);
+      transition: background-color var(--transition-fast);
+    }
+
+    .search-suggestion-item:hover {
+      background-color: var(--uzum-surface);
+    }
+
+    .search-suggestion-thumb {
+      width: 40px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: var(--uzum-card-img-bg);
+      flex-shrink: 0;
+    }
+
+    .search-suggestion-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-suggestion-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--uzum-text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-suggestion-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--uzum-purple);
+      margin-top: 2px;
+    }
+
+    .search-all-results-btn {
+      width: 100%;
+      padding: 11px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--uzum-purple);
+      background: #F8F5FF;
+      transition: background-color var(--transition-fast);
+    }
+
+    .search-all-results-btn:hover {
+      background: var(--uzum-purple-soft);
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .header-action-btn {
+      position: relative;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--uzum-text-main);
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .header-action-btn:hover {
+      background-color: var(--uzum-surface);
+    }
+
+    .header-action-btn.active {
+      background-color: var(--uzum-purple-soft);
+      color: var(--uzum-purple);
+    }
+
+    .counter-pill {
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background-color: var(--uzum-purple);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       4. MEGA MENU DROPDOWN
+       ========================================================================== */
+    .mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--uzum-border);
+      box-shadow: var(--shadow-lg);
+      z-index: 60;
+      animation: dropdownFade 0.2s ease-out;
+    }
+
+    .mega-menu-grid {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 24px;
+      padding: 20px 0 28px;
+      min-height: 390px;
+    }
+
+    .mega-cat-list {
+      border-right: 1px solid var(--uzum-surface);
+      padding-right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-height: 440px;
+      overflow-y: auto;
+    }
+
+    .mega-cat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--uzum-text-main);
+      text-align: left;
+      transition: all var(--transition-fast);
+    }
+
+    .mega-cat-item:hover, .mega-cat-item.active {
+      background-color: var(--uzum-surface);
+      color: var(--uzum-purple);
+      font-weight: 600;
+    }
+
+    .mega-cat-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mega-sub-panel {
+      padding: 4px 8px;
+    }
+
+    .mega-sub-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .mega-sub-title {
+      font-size: 20px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--uzum-text-main);
+    }
+
+    .mega-sub-title:hover {
+      color: var(--uzum-purple);
+    }
+
+    .mega-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .mega-sub-link {
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--uzum-text-secondary);
+      text-align: left;
+      transition: all var(--transition-fast);
+    }
+
+    .mega-sub-link:hover {
+      background: var(--uzum-surface);
+      color: var(--uzum-purple);
+      font-weight: 500;
+    }
+
+    .mega-promo-card {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, #4B00B5 0%, #7000FF 65%, #9333EA 100%);
+      color: #FFFFFF;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* ==========================================================================
+       5. CATEGORY NAVIGATION BAR (44px)
+       ========================================================================== */
+    .category-bar {
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(54, 54, 64, 0.06);
+    }
+
+    .category-bar-inner {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    .category-bar-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-nav-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--uzum-text-main);
+      flex-shrink: 0;
+      transition: color var(--transition-fast);
+    }
+
+    .cat-nav-highlight:hover {
+      color: var(--uzum-purple);
+    }
+
+    .yellow-percent-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--uzum-yellow);
+      color: var(--uzum-text-main);
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cat-nav-item {
+      position: relative;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      font-size: 13.5px;
+      color: var(--uzum-text-secondary);
+      flex-shrink: 0;
+      transition: color var(--transition-fast);
+    }
+
+    .cat-nav-item:hover, .cat-nav-item.active {
+      color: var(--uzum-text-main);
+      font-weight: 600;
+    }
+
+    .cat-nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--uzum-text-main);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-fast);
+    }
+
+    .cat-nav-item:hover::after, .cat-nav-item.active::after {
+      transform: scaleX(1);
+    }
+
+    /* ==========================================================================
+       6. HERO BANNER CAROUSEL
+       ========================================================================== */
+    .hero-section {
+      padding-top: 16px;
+      padding-bottom: 8px;
+    }
+
+    .hero-carousel {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      user-select: none;
+    }
+
+    .hero-track {
+      display: flex;
+      transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-slide {
+      width: 100%;
+      flex-shrink: 0;
+      min-height: 370px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: center;
+      padding: 36px 56px;
+      gap: 24px;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--uzum-yellow);
+      color: var(--uzum-text-main);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 11px;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      max-width: 560px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.5;
+      margin-bottom: 24px;
+      max-width: 480px;
+    }
+
+    .hero-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: #FFFFFF;
+      color: var(--uzum-text-main);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+      transition: transform var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    .hero-cta-btn:hover {
+      background: var(--uzum-yellow);
+      transform: translateY(-1px);
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-img-frame {
+      width: 300px;
+      height: 300px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+      transform: rotate(2deg);
+      transition: transform var(--transition-smooth);
+    }
+
+    .hero-carousel:hover .hero-img-frame {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .hero-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--uzum-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transition: opacity var(--transition-fast), background-color var(--transition-fast);
+      z-index: 10;
+    }
+
+    .hero-carousel:hover .hero-arrow {
+      opacity: 1;
+    }
+
+    .hero-arrow:hover {
+      background: #FFFFFF;
+    }
+
+    .hero-arrow.prev { left: 16px; }
+    .hero-arrow.next { right: 16px; }
+
+    .hero-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 5px 10px;
+      border-radius: 999px;
+      z-index: 10;
+    }
+
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.55);
+      transition: width 0.28s ease, background-color 0.28s ease;
+    }
+
+    .hero-dot.active {
+      width: 24px;
+      background: #FFFFFF;
+    }
+
+    /* Quick Feature Strip */
+    .quick-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .quick-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-lg);
+      background: var(--uzum-surface);
+      text-align: left;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .quick-card:hover {
+      background: var(--uzum-surface-hover);
+      transform: translateY(-1px);
+    }
+
+    .quick-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .quick-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--uzum-text-main);
+    }
+
+    .quick-sub {
+      font-size: 12px;
+      color: var(--uzum-text-muted);
+    }
+
+    /* ==========================================================================
+       7. PRODUCT SECTIONS & SIGNATURE UZUM PRODUCT CARD (3:4)
+       ========================================================================== */
+    .product-section {
+      padding: 24px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-title-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--uzum-text-main);
+      letter-spacing: -0.02em;
+      transition: color var(--transition-fast);
+    }
+
+    .section-title-btn:hover {
+      color: var(--uzum-purple);
+    }
+
+    .section-see-all {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--uzum-purple);
+    }
+
+    .section-see-all:hover {
+      text-decoration: underline;
+    }
+
+    /* 5-Column Responsive Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 20px 16px;
+    }
+
+    /* Product Card */
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow var(--transition-smooth), transform var(--transition-fast);
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background-color: var(--uzum-card-img-bg);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .product-card:hover .card-img {
+      transform: scale(1.035);
+    }
+
+    /* Favorite Heart Button */
+    .card-fav-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--uzum-text-main);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      transition: transform var(--transition-fast), background-color var(--transition-fast);
+      z-index: 5;
+    }
+
+    .card-fav-btn:hover {
+      background: #FFFFFF;
+      transform: scale(1.08);
+    }
+
+    .card-fav-btn.active {
+      color: var(--uzum-purple);
+    }
+
+    .card-fav-btn.pulse {
+      animation: heartPulse 0.36s ease;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.32); }
+      100% { transform: scale(1); }
+    }
+
+    /* Bottom-Left Promotional Micro Badges */
+    .card-badges {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .micro-badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #FFFFFF;
+      background-color: var(--uzum-purple);
+      line-height: 1.25;
+    }
+
+    .micro-badge.original {
+      background-color: var(--uzum-purple-dark);
+    }
+
+    .micro-badge.super {
+      background-color: var(--uzum-red);
+    }
+
+    /* Card Content */
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 6px 8px;
+    }
+
+    .card-title {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: var(--uzum-text-main);
+      line-height: 1.32;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 5px;
+      transition: color var(--transition-fast);
+    }
+
+    .product-card:hover .card-title {
+      color: var(--uzum-purple);
+    }
+
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      color: var(--uzum-text-muted);
+      margin-bottom: 6px;
+    }
+
+    .card-rating strong {
+      color: var(--uzum-text-secondary);
+      font-weight: 500;
+    }
+
+    .installment-pill {
+      display: inline-block;
+      background-color: var(--uzum-yellow);
+      color: var(--uzum-text-main);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-old-price {
+      font-size: 11.5px;
+      color: var(--uzum-text-muted);
+      text-decoration: line-through;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .card-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--uzum-text-main);
+      line-height: 1.2;
+    }
+
+    /* Circular Add-to-Cart Icon Button */
+    .card-cart-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--uzum-border-strong);
+      background: #FFFFFF;
+      color: var(--uzum-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .card-cart-btn:hover {
+      background: var(--uzum-surface);
+      border-color: var(--uzum-text-main);
+    }
+
+    .card-cart-btn.added {
+      background: var(--uzum-purple);
+      border-color: var(--uzum-purple);
+      color: #FFFFFF;
+      transform: scale(1.1);
+    }
+
+    /* Wide Load More Button */
+    .load-more-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    .load-more-btn {
+      width: 100%;
+      max-width: 740px;
+      height: 48px;
+      border-radius: 12px;
+      background-color: var(--uzum-surface);
+      color: var(--uzum-text-main);
+      font-size: 15px;
+      font-weight: 600;
+      transition: background-color var(--transition-fast);
+    }
+
+    .load-more-btn:hover {
+      background-color: var(--uzum-surface-hover);
+    }
+
+    /* Mid-Page Promo Banner */
+    .mid-banner {
+      margin: 12px 0;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(110deg, #3B007D 0%, #7000FF 60%, #8E33FF 100%);
+      padding: 28px 36px;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       8. CATALOG VIEW (FILTERS & SORTING)
+       ========================================================================== */
+    .catalog-view {
+      padding: 20px 0 56px;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--uzum-text-muted);
+      margin-bottom: 14px;
+    }
+
+    .breadcrumbs button:hover {
+      color: var(--uzum-text-main);
+    }
+
+    .catalog-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--uzum-surface);
+    }
+
+    .catalog-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .catalog-heading {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .catalog-count {
+      font-size: 14px;
+      color: var(--uzum-text-muted);
+    }
+
+    .sort-select {
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid var(--uzum-border-strong);
+      background: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 500;
+      outline: none;
+    }
+
+    .sort-select:focus {
+      border-color: var(--uzum-purple);
+    }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .filter-sidebar {
+      position: sticky;
+      top: 88px;
+      background: #FFFFFF;
+      border: 1px solid var(--uzum-surface);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .filter-block {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--uzum-surface);
+    }
+
+    .filter-block:last-of-type {
+      border-bottom: none;
+      margin-bottom: 8px;
+    }
+
+    .filter-block-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .filter-cat-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: var(--uzum-text-secondary);
+      margin-bottom: 2px;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-cat-btn:hover {
+      background: var(--uzum-surface);
+    }
+
+    .filter-cat-btn.active {
+      background: var(--uzum-purple-soft);
+      color: var(--uzum-purple);
+      font-weight: 600;
+    }
+
+    .price-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .price-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid var(--uzum-border-strong);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .price-input:focus {
+      border-color: var(--uzum-purple);
+    }
+
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--uzum-purple);
+      cursor: pointer;
+    }
+
+    .reset-filter-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--uzum-surface);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: background-color var(--transition-fast);
+    }
+
+    .reset-filter-btn:hover {
+      background: var(--uzum-surface-hover);
+    }
+
+    /* ==========================================================================
+       9. DRAWERS (CART & FAVORITES) & MODALS (PRODUCT DETAIL, CITY, AUTH)
+       ========================================================================== */
+    .overlay-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 19, 24, 0.52);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .overlay-backdrop.drawer-mode {
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    .drawer-panel {
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 36px rgba(0, 0, 0, 0.18);
+      animation: slideInRight 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--uzum-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .close-circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--uzum-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--uzum-text-secondary);
+      transition: background-color var(--transition-fast);
+    }
+
+    .close-circle-btn:hover {
+      background: var(--uzum-surface-hover);
+      color: var(--uzum-text-main);
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 20px;
+    }
+
+    .drawer-footer {
+      padding: 16px 20px 20px;
+      border-top: 1px solid var(--uzum-surface);
+      background: #FFFFFF;
+    }
+
+    /* Cart Item Row */
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--uzum-surface);
+    }
+
+    .cart-item:first-child {
+      padding-top: 0;
+    }
+
+    .cart-item-img {
+      width: 72px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: var(--uzum-card-img-bg);
+      flex-shrink: 0;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-title {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--uzum-text-main);
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cart-item-meta {
+      font-size: 12px;
+      color: var(--uzum-text-muted);
+      margin-bottom: 10px;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      border: 1px solid var(--uzum-border-strong);
+      border-radius: 8px;
+      padding: 0 4px;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--uzum-text-secondary);
+    }
+
+    .qty-btn:hover {
+      color: var(--uzum-text-main);
+    }
+
+    .qty-val {
+      min-width: 26px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .primary-purple-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: 12px;
+      background-color: var(--uzum-purple);
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .primary-purple-btn:hover {
+      background-color: var(--uzum-purple-hover);
+    }
+
+    .primary-purple-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* Modal Dialog */
+    .modal-box {
+      width: 100%;
+      max-width: 960px;
+      max-height: 92vh;
+      background: #FFFFFF;
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      animation: modalScale 0.22s ease-out;
+    }
+
+    .modal-box.small {
+      max-width: 440px;
+      padding: 26px;
+    }
+
+    @keyframes modalScale {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .product-modal-body {
+      overflow-y: auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 28px;
+    }
+
+    .pd-gallery-main {
+      aspect-ratio: 3 / 4;
+      max-height: 460px;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--uzum-card-img-bg);
+    }
+
+    .pd-gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pd-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pd-thumb {
+      width: 58px;
+      height: 74px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: var(--uzum-card-img-bg);
+    }
+
+    .pd-thumb.active {
+      border-color: var(--uzum-purple);
+    }
+
+    .pd-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pd-price-box {
+      border: 1px solid var(--uzum-border);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .pd-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13.5px;
+    }
+
+    .pd-specs-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--uzum-surface);
+    }
+
+    .pd-specs-table td:first-child {
+      color: var(--uzum-text-muted);
+    }
+
+    .pd-specs-table td:last-child {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       10. TOAST NOTIFICATIONS
+       ========================================================================== */
+    .toast-stack {
+      position: fixed;
+      top: 84px;
+      right: 16px;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 350px;
+      width: calc(100vw - 32px);
+      pointer-events: none;
+    }
+
+    .toast-card {
+      pointer-events: auto;
+      background: #FFFFFF;
+      border: 1px solid var(--uzum-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: dropdownFade 0.2s ease-out;
+    }
+
+    .toast-thumb {
+      width: 42px;
+      height: 54px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--uzum-card-img-bg);
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       11. FOOTER & MOBILE BOTTOM NAV
+       ========================================================================== */
+    .site-footer {
+      margin-top: auto;
+      background: #FFFFFF;
+      border-top: 1px solid rgba(54, 54, 64, 0.08);
+      padding: 40px 0 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--uzum-surface);
+    }
+
+    .footer-col-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--uzum-text-secondary);
+    }
+
+    .footer-links button:hover {
+      color: var(--uzum-text-main);
+    }
+
+    .app-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .store-pill {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--uzum-surface);
+      font-size: 12.5px;
+      font-weight: 700;
+      transition: background-color var(--transition-fast);
+    }
+
+    .store-pill:hover {
+      background: var(--uzum-surface-hover);
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--uzum-text-muted);
+    }
+
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--uzum-border);
+      z-index: 45;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .mobile-nav-btn {
+      position: relative;
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--uzum-text-muted);
+    }
+
+    .mobile-nav-btn.active {
+      color: var(--uzum-purple);
+    }
+
+    .mobile-nav-badge {
+      position: absolute;
+      top: 4px;
+      right: calc(50% - 18px);
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: var(--uzum-purple);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes dropdownFade {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ==========================================================================
+       12. RESPONSIVE BREAKPOINTS (1920px -> 320px)
+       ========================================================================== */
+    @media (max-width: 1120px) {
+      .product-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .header-action-label {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .top-bar-promo {
+        display: none;
+      }
+      .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        position: static;
+      }
+      .hero-slide {
+        padding: 28px 32px;
+        min-height: 300px;
+      }
+      .hero-title {
+        font-size: 28px;
+      }
+      .hero-img-frame {
+        width: 220px;
+        height: 220px;
+      }
+      .quick-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .product-modal-body {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-bar {
+        display: none;
+      }
+      .header-inner {
+        height: 60px;
+        gap: 10px;
+      }
+      .katalog-btn, .header-actions {
+        display: none;
+      }
+      .logo-text {
+        font-size: 18px;
+      }
+      .hero-slide {
+        grid-template-columns: 1.2fr 0.8fr;
+        padding: 20px 18px;
+        min-height: 210px;
+      }
+      .hero-title {
+        font-size: 19px;
+        margin-bottom: 8px;
+      }
+      .hero-subtitle {
+        display: none;
+      }
+      .hero-cta-btn {
+        padding: 8px 14px;
+        font-size: 12.5px;
+      }
+      .hero-img-frame {
+        width: 124px;
+        height: 124px;
+        border-radius: 16px;
+      }
+      .hero-arrow {
+        display: none;
+      }
+      .section-title-btn {
+        font-size: 20px;
+      }
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 10px;
+      }
+      .mid-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .site-footer {
+        padding-bottom: 76px;
+      }
+      .mobile-bottom-nav {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. TOP DELIVERY & LOCATION BAR
+       ====================================================================== -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <button type="button" class="city-trigger" id="openCityBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Shahar: <span class="city-name-underline" id="selectedCityLabel">Toshkent</span></span>
+        </button>
+        <button type="button" class="top-bar-link" id="pickupPointsBtn">Topshirish punktlari</button>
+      </div>
+
+      <div class="top-bar-promo">Buyurtmangizni 1 kunda bepul yetkazib beramiz!</div>
+
+      <div class="top-bar-right">
+        <button type="button" class="top-bar-link purple" onclick="openCatalogView({ discountOnly: true })">Uzumda soting</button>
+        <button type="button" class="top-bar-link" onclick="openCatalogView({})">Savol-javoblar</button>
+        <button type="button" class="top-bar-link" onclick="openCartDrawer()">Buyurtmalarim</button>
+        <button type="button" class="lang-pill" id="langToggleBtn">
+          <span class="lang-badge" id="langBadge">UZ</span>
+          <span id="langLabel">O'zbekcha</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       2. STICKY MAIN HEADER
+       ====================================================================== -->
+  <header class="main-header">
+    <div class="container header-inner">
+      <!-- Uzum Brand Logo -->
+      <button type="button" class="uzum-logo" onclick="showHomeView()" aria-label="Uzum Market">
+        <span class="logo-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="6.5" r="2.3" fill="#FFFFFF" />
+            <circle cx="8.2" cy="10.2" r="2.3" fill="#FFFFFF" />
+            <circle cx="15.8" cy="10.2" r="2.3" fill="#FFFFFF" />
+            <circle cx="12" cy="13.8" r="2.3" fill="#FFFFFF" />
+            <circle cx="8.8" cy="17.2" r="2.1" fill="#FFFFFF" />
+            <circle cx="15.2" cy="17.2" r="2.1" fill="#FFFFFF" />
+            <path d="M12 4.2C12 2.7 13.4 2 14.8 2.2" stroke="#FFFF00" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="logo-text">uzum <span>market</span></span>
+      </button>
+
+      <!-- Katalog Mega-Menu Trigger -->
+      <button type="button" class="katalog-btn" id="katalogToggleBtn">
+        <svg id="katalogIconOpen" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        <svg id="katalogIconClose" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        <span>Katalog</span>
+      </button>
+
+      <!-- Live Search Bar -->
+      <div class="search-wrapper" id="searchWrapper">
+        <form class="search-form" id="searchForm">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Mahsulotlar va toifalarni izlash"
+            autocomplete="off"
+          />
+          <button type="button" class="search-clear-btn hidden" id="searchClearBtn" aria-label="Tozalash">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+          <button type="submit" class="search-submit-btn" aria-label="Izlash">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+        </form>
+        <div class="search-dropdown hidden" id="searchDropdown"></div>
+      </div>
+
+      <!-- Right Action Buttons -->
+      <div class="header-actions">
+        <button type="button" class="header-action-btn" id="openAuthBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="header-action-label" id="headerUserLabel">Kirish</span>
+        </button>
+
+        <button type="button" class="header-action-btn" id="openFavDrawerBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span class="header-action-label">Saralangan</span>
+          <span class="counter-pill hidden" id="headerFavCount">0</span>
+        </button>
+
+        <button type="button" class="header-action-btn" id="openCartDrawerBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="header-action-label">Savat</span>
+          <span class="counter-pill hidden" id="headerCartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Mega-Menu Dropdown -->
+    <div class="mega-menu hidden" id="megaMenu">
+      <div class="container mega-menu-grid">
+        <div class="mega-cat-list" id="megaCatList"></div>
+        <div class="mega-sub-panel" id="megaSubPanel"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       3. CATEGORY NAVIGATION BAR
+       ====================================================================== -->
+  <nav class="category-bar">
+    <div class="container category-bar-inner" id="categoryBarInner"></div>
+  </nav>
+
+  <!-- ======================================================================
+       4. HOME VIEW
+       ====================================================================== -->
+  <div id="homeView">
+    <!-- Hero Carousel -->
+    <section class="container hero-section">
+      <div class="hero-carousel" id="heroCarousel">
+        <div class="hero-track" id="heroTrack"></div>
+        <button type="button" class="hero-arrow prev" id="heroPrevBtn" aria-label="Oldingi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="hero-arrow next" id="heroNextBtn" aria-label="Keyingi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <div class="hero-dots" id="heroDots"></div>
+      </div>
+
+      <!-- Quick Value Pills -->
+      <div class="quick-strip">
+        <button type="button" class="quick-card" onclick="openCatalogView({ discountOnly: true })">
+          <span class="quick-icon" style="background:#7000FF;color:#FFF;">%</span>
+          <div>
+            <div class="quick-title">Har kuni foyda</div>
+            <div class="quick-sub">Katta chegirmalar</div>
+          </div>
+        </button>
+        <button type="button" class="quick-card" onclick="openCatalogView({})">
+          <span class="quick-icon" style="background:#FFFF00;color:#1F2026;">12</span>
+          <div>
+            <div class="quick-title">Uzum Nasiya</div>
+            <div class="quick-sub">0% boshlang‘ich to‘lov</div>
+          </div>
+        </button>
+        <button type="button" class="quick-card" onclick="openCatalogView({ badge: 'Original' })">
+          <span class="quick-icon" style="background:#3B007D;color:#FFF;">✓</span>
+          <div>
+            <div class="quick-title">Original brendlar</div>
+            <div class="quick-sub">100% sifat kafolati</div>
+          </div>
+        </button>
+        <button type="button" class="quick-card" onclick="openCatalogView({ sort: 'newest' })">
+          <span class="quick-icon" style="background:#1F2026;color:#FFF;">1k</span>
+          <div>
+            <div class="quick-title">1 kunda yetkazish</div>
+            <div class="quick-sub">Bepul topshirish punkti</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Section 1: Mashhur -->
+    <section class="container product-section">
+      <div class="section-header">
+        <button type="button" class="section-title-btn" onclick="openCatalogView({ sort: 'popular' })">
+          <span>Mashhur</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button type="button" class="section-see-all" onclick="openCatalogView({ sort: 'popular' })">Hammasini ko‘rish</button>
+      </div>
+      <div class="product-grid" id="popularGrid"></div>
+      <div class="load-more-wrap" id="popularLoadMoreWrap">
+        <button type="button" class="load-more-btn" id="popularLoadMoreBtn">Yana ko‘rsatish 10</button>
+      </div>
+    </section>
+
+    <!-- Mid Promotional Banner -->
+    <div class="container">
+      <div class="mid-banner" onclick="openCatalogView({ category: 'appliances' })">
+        <div>
+          <span class="hero-badge" style="margin-bottom:10px;">KATTA SAVDO • TEXNIKA</span>
+          <h3 style="font-size:24px;font-weight:800;margin-bottom:6px;">Uyingiz uchun zamonaviy maishiy texnika — 35% gacha chegirma!</h3>
+          <p style="font-size:14px;color:rgba(255,255,255,0.88);">Dyson, Bosch, Tefal va Xiaomi rasmiy kafolati hamda 12 oylik muddatli to‘lov bilan</p>
+        </div>
+        <span class="hero-cta-btn" style="flex-shrink:0;">To‘plamni ko‘rish</span>
+      </div>
+    </div>
+
+    <!-- Section 2: Arzon narxlar kafolati -->
+    <section class="container product-section">
+      <div class="section-header">
+        <button type="button" class="section-title-btn" onclick="openCatalogView({ discountOnly: true })">
+          <span>Arzon narxlar kafolati</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button type="button" class="section-see-all" onclick="openCatalogView({ discountOnly: true })">Hammasini ko‘rish</button>
+      </div>
+      <div class="product-grid" id="discountGrid"></div>
+    </section>
+
+    <!-- Section 3: Yangi kelganlar -->
+    <section class="container product-section">
+      <div class="section-header">
+        <button type="button" class="section-title-btn" onclick="openCatalogView({ sort: 'newest' })">
+          <span>Yangi kelganlar</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button type="button" class="section-see-all" onclick="openCatalogView({ sort: 'newest' })">Hammasini ko‘rish</button>
+      </div>
+      <div class="product-grid" id="newestGrid"></div>
+    </section>
+
+    <!-- Section 4: Elektronika va smartfonlar -->
+    <section class="container product-section">
+      <div class="section-header">
+        <button type="button" class="section-title-btn" onclick="openCatalogView({ category: 'smartphones' })">
+          <span>Smartfonlar va gadjetlar</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button type="button" class="section-see-all" onclick="openCatalogView({ category: 'smartphones' })">Hammasini ko‘rish</button>
+      </div>
+      <div class="product-grid" id="smartphonesGrid"></div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       5. CATALOG & SEARCH RESULTS VIEW
+       ====================================================================== -->
+  <div id="catalogView" class="container catalog-view hidden">
+    <div class="breadcrumbs">
+      <button type="button" onclick="showHomeView()">Bosh sahifa</button>
+      <span>/</span>
+      <span id="catalogBreadcrumb" style="color:var(--uzum-text-main);font-weight:600;">Katalog</span>
+    </div>
+
+    <div class="catalog-top-bar">
+      <div class="catalog-title-group">
+        <h1 class="catalog-heading" id="catalogHeading">Barcha mahsulotlar</h1>
+        <span class="catalog-count" id="catalogResultCount">0 ta mahsulot</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;color:var(--uzum-text-muted);">Saralash:</span>
+        <select class="sort-select" id="catalogSortSelect">
+          <option value="popular">Ommabop</option>
+          <option value="price-asc">Arzonroq</option>
+          <option value="price-desc">Qimmatroq</option>
+          <option value="rating">Reytingi yuqori</option>
+          <option value="newest">Yangi kelganlar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="catalog-layout">
+      <!-- Left Filter Sidebar -->
+      <aside class="filter-sidebar">
+        <div class="filter-block">
+          <div class="filter-block-title">Toifalar</div>
+          <div id="filterCategoriesList"></div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-block-title">Narx, so‘m</div>
+          <div class="price-inputs">
+            <input type="number" class="price-input" id="filterMinPrice" placeholder="dan 95 000" />
+            <input type="number" class="price-input" id="filterMaxPrice" placeholder="gacha 16 000 000" />
+          </div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-block-title">Brendlar</div>
+          <div class="checkbox-list" id="filterBrandsList"></div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-block-title">Reyting va takliflar</div>
+          <div class="checkbox-list">
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterRatingHigh" />
+              <span>4.8 ★ va undan yuqori</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterDiscountOnly" />
+              <span>Faqat chegirmali</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="filterOriginalOnly" />
+              <span>Original mahsulot</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="button" class="reset-filter-btn" id="resetFiltersBtn">Filtrlarni tozalash</button>
+      </aside>
+
+      <!-- Filtered Products Grid -->
+      <div>
+        <div class="product-grid" style="grid-template-columns:repeat(4, minmax(0, 1fr));" id="catalogProductsGrid"></div>
+        <div class="hidden" id="catalogEmptyState" style="text-align:center;padding:56px 20px;background:var(--uzum-surface);border-radius:16px;">
+          <h3 style="font-size:19px;font-weight:700;margin-bottom:8px;">Hech narsa topilmadi</h3>
+          <p style="font-size:14px;color:var(--uzum-text-muted);margin-bottom:18px;">Tanlangan filtr yoki qidiruv so‘rovi bo‘yicha mahsulot topilmadi.</p>
+          <button type="button" class="primary-purple-btn" style="max-width:220px;" onclick="resetCatalogFilters()">Filtrlarni tozalash</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       6. SHOPPING CART DRAWER (SAVAT)
+       ====================================================================== -->
+  <div class="overlay-backdrop drawer-mode hidden" id="cartDrawerBackdrop">
+    <div class="drawer-panel" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h2 class="drawer-title">Savatingiz <span id="drawerCartTotalItems" style="color:var(--uzum-text-muted);font-weight:400;font-size:16px;"></span></h2>
+        <button type="button" class="close-circle-btn" onclick="closeCartDrawer()" aria-label="Yopish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="drawer-body" id="cartDrawerBody"></div>
+      <div class="drawer-footer hidden" id="cartDrawerFooter"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       7. FAVORITES DRAWER (SARALANGANLAR)
+       ====================================================================== -->
+  <div class="overlay-backdrop drawer-mode hidden" id="favDrawerBackdrop">
+    <div class="drawer-panel" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h2 class="drawer-title">Istaklarim <span id="drawerFavTotalItems" style="color:var(--uzum-text-muted);font-weight:400;font-size:16px;"></span></h2>
+        <button type="button" class="close-circle-btn" onclick="closeFavDrawer()" aria-label="Yopish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="drawer-body" id="favDrawerBody"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       8. PRODUCT DETAILS MODAL
+       ====================================================================== -->
+  <div class="overlay-backdrop hidden" id="productModalBackdrop">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <span style="font-size:13px;color:var(--uzum-text-muted);font-weight:600;" id="pdModalCategory">Uzum Market</span>
+        <button type="button" class="close-circle-btn" onclick="closeProductModal()" aria-label="Yopish">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="product-modal-body" id="productModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       9. CITY SELECTION MODAL
+       ====================================================================== -->
+  <div class="overlay-backdrop hidden" id="cityModalBackdrop">
+    <div class="modal-box small" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <h3 style="font-size:19px;font-weight:700;">Yetkazib berish shahri</h3>
+        <button type="button" class="close-circle-btn" onclick="closeCityModal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--uzum-text-muted);margin-bottom:16px;">Shahringizni tanlang — 1 kunlik bepul yetkazib berish punktlari ko‘rsatiladi.</p>
+      <div id="cityListGrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       10. KIRISH (AUTH) & CHECKOUT SUCCESS MODAL
+       ====================================================================== -->
+  <div class="overlay-backdrop hidden" id="authModalBackdrop">
+    <div class="modal-box small" onclick="event.stopPropagation()" id="authModalContent"></div>
+  </div>
+
+  <!-- ======================================================================
+       11. TOAST NOTIFICATIONS
+       ====================================================================== -->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <!-- ======================================================================
+       12. FOOTER
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4 class="footer-col-title">Biz haqimizda</h4>
+          <ul class="footer-links">
+            <li><button type="button" onclick="openCityModal()">Topshirish punktlari</button></li>
+            <li><button type="button" onclick="showHomeView()">Vakansiyalar</button></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Foydalanuvchilarga</h4>
+          <ul class="footer-links">
+            <li><button type="button" onclick="openCatalogView({})">Biz bilan bog‘lanish</button></li>
+            <li><button type="button" onclick="openCatalogView({})">Savol-javob</button></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Tadbirkorlarga</h4>
+          <ul class="footer-links">
+            <li><button type="button" onclick="openCatalogView({ discountOnly: true })">Uzumda soting</button></li>
+            <li><button type="button" onclick="openAuthModal()">Sotuvchi kabinetiga kirish</button></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Ilovani yuklab olish</h4>
+          <div class="app-badges">
+            <span class="store-pill">App Store</span>
+            <span class="store-pill">Google Play</span>
+          </div>
+          <h4 class="footer-col-title">Uzum ijtimoiy tarmoqlarda</h4>
+          <div class="app-badges">
+            <span class="store-pill">Instagram</span>
+            <span class="store-pill">Telegram</span>
+            <span class="store-pill">YouTube</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div style="display:flex;gap:18px;color:var(--uzum-text-main);font-weight:500;">
+          <span>Maxfiylik kelishuvi</span>
+          <span>Foydalanuvchi kelishuvi</span>
+        </div>
+        <div>«2026© Uzum Market — Milliy marketpleys»</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       13. MOBILE BOTTOM NAVIGATION BAR
+       ====================================================================== -->
+  <nav class="mobile-bottom-nav">
+    <button type="button" class="mobile-nav-btn active" id="mobNavHome" onclick="showHomeView()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Bosh sahifa</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" id="mobNavCatalog" onclick="openCatalogView({})">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      <span>Katalog</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" onclick="openCartDrawer()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Savat</span>
+      <span class="mobile-nav-badge hidden" id="mobCartBadge">0</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" onclick="openFavDrawer()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      <span>Saralangan</span>
+      <span class="mobile-nav-badge hidden" id="mobFavBadge">0</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" onclick="openAuthModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Kabinet</span>
+    </button>
+  </nav>
+
+  <!-- ======================================================================
+       14. VANILLA JAVASCRIPT APPLICATION ENGINE
+       ====================================================================== -->
+  <script>
+    // ------------------------------------------------------------------------
+    // A. CATEGORIES & HERO SLIDES DATA
+    // ------------------------------------------------------------------------
+    const CATEGORIES = [
+      { id: 'electronics', name: 'Elektronika', subs: ['Noutbuklar va planshetlar', 'Televizorlar va audio', 'Quloqchinlar va garnituralar', 'Aqlli soatlar', 'O‘yin konsollari', 'Foto va video'] },
+      { id: 'smartphones', name: 'Smartfonlar', subs: ['Apple iPhone', 'Samsung Galaxy', 'Xiaomi / Redmi / Poco', 'Honor va Huawei', 'Smartfon aksessuarlari', 'Quvvatlagichlar'] },
+      { id: 'appliances', name: 'Maishiy texnika', subs: ['Changyutgichlar', 'Oshxona texnikasi', 'Kir yuvish mashinalari', 'Qahva mashinalari', 'Iqlim texnikasi', 'Dazmollar'] },
+      { id: 'clothing', name: 'Kiyimlar', subs: ['Erkaklar kiyimi', 'Ayollar kiyimi', 'Sport kostyumlari', 'Ustki kiyimlar', 'Bolalar kiyimi', 'Uy kiyimlari'] },
+      { id: 'shoes', name: 'Poyabzallar', subs: ['Krossovkalar va kedalar', 'Erkaklar poyabzali', 'Ayollar poyabzali', 'Mavsumiy poyabzal'] },
+      { id: 'accessories', name: 'Aksessuarlar', subs: ['Sumkalar va ryukzaklar', 'Quyosh ko‘zoynaklari', 'Qo‘l soatlari', 'Kamarlar va hamyonlar'] },
+      { id: 'beauty', name: 'Go‘zallik va parvarish', subs: ['Yuz parvarishi', 'Parfyumeriya', 'Soch parvarishi texnikasi', 'Koreya kosmetikasi', 'Makiyaj'] },
+      { id: 'home-garden', name: 'Uy-ro‘zg‘or buyumlari', subs: ['Oshxona idishlari', 'Choyshablar va to‘qimachilik', 'Yoritish', 'Saqlash tizimlari'] },
+      { id: 'kids', name: 'Bolalar tovarlari', subs: ['Konstruktorlar va LEGO', 'Bolalar aravachalari', 'O‘yinchoqlar', 'Maktab anjomlari'] },
+      { id: 'sports', name: 'Sport va hordiq', subs: ['Elektr samokatlar', 'Fitnes va gantellar', 'Velosipedlar', 'Turizm va kemping'] },
+      { id: 'food', name: 'Oziq-ovqat', subs: ['Donli va maydalangan qahva', 'Tabiiy tog‘ asali', 'Choy va shirinliklar', 'Yong‘oqlar'] }
+    ];
+
+    const CITIES = ['Toshkent', 'Samarqand', 'Buxoro', 'Andijon', 'Namangan', 'Farg‘ona', 'Nukus', 'Qarshi', 'Urganch', 'Navoiy', 'Jizzax', 'Termiz'];
+
+    const HERO_SLIDES = [
+      {
+        badge: 'KATTA SAVDO • -45% GACHA',
+        title: 'Flagman smartfonlar va Apple texnikasiga bahorgi chegirmalar',
+        subtitle: '0% boshlang‘ich to‘lov bilan 12 oygacha muddatli to‘lov va ertaga bepul yetkazib berish',
+        cta: 'Xarid qilish',
+        category: 'smartphones',
+        bg: 'linear-gradient(115deg, #4B00B5 0%, #7000FF 55%, #9B4DFF 100%)',
+        image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=85'
+      },
+      {
+        badge: 'MUDDATLI TO‘LOV 12 OY',
+        title: 'Dyson va uy uchun premium maishiy texnika',
+        subtitle: 'Original kafolat, rasmiy do‘konlardan to‘g‘ridan-to‘g‘ri topshirish punktiga yetkazish',
+        cta: 'Ko‘rish',
+        category: 'appliances',
+        bg: 'linear-gradient(115deg, #1E1B4B 0%, #3B007D 60%, #7000FF 100%)',
+        image: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=800&q=85'
+      },
+      {
+        badge: 'YANGI KOLLEKSIYA',
+        title: 'Original Nike krossovkalari va sport uslubi',
+        subtitle: 'O‘lchamni topshirish punktida kiyib ko‘ring va faqat yoqqanini oling',
+        cta: 'Tanlash',
+        category: 'shoes',
+        bg: 'linear-gradient(115deg, #0F172A 0%, #311068 55%, #6D28D9 100%)',
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85'
+      },
+      {
+        badge: 'NOUTBUKLAR VA GADJETLAR',
+        title: 'Ish va o‘qish uchun kuchli MacBook Air hamda planshetlar',
+        subtitle: 'Eng qulay narxlar kafolati va halol muddatli to‘lov',
+        cta: 'Katalogga o‘tish',
+        category: 'electronics',
+        bg: 'linear-gradient(115deg, #1E1035 0%, #4C1D95 55%, #7000FF 100%)',
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=85'
+      }
+    ];
+
+    // ------------------------------------------------------------------------
+    // B. 32 REALISTIC PRODUCTS DATASET
+    // ------------------------------------------------------------------------
+    const PRODUCTS = [
+      { id: 'uzm-101', title: 'Smartfon Apple iPhone 15 Pro Max 256GB, Natural Titanium, Dual eSIM', category: 'smartphones', brand: 'Apple', price: 15890000, oldPrice: 18490000, rating: 4.9, reviewCount: 428, orders: 1940, isPopular: true, isNew: false, badges: ['Original', 'Katta savdo'], seller: 'Apple Authorized UZ', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=700&q=85', 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&w=700&q=85'], description: 'Titan korpusli flagman Apple iPhone 15 Pro Max. A17 Pro kuchli protsessori, 5x optik zumli kamera tizimi va UzIMEI rasmiy ro‘yxatdan o‘tgan.', specs: { 'Ekran': '6.7" Super Retina XDR 120Hz', 'Protsessor': 'Apple A17 Pro', 'Xotira': '256 GB', 'Kafolat': '1 yil rasmiy kafolat' } },
+      { id: 'uzm-102', title: 'Smartfon Samsung Galaxy S24 Ultra 12/512GB, S-Pen bilan, Titanium Gray', category: 'smartphones', brand: 'Samsung', price: 13990000, oldPrice: 16500000, rating: 4.9, reviewCount: 315, orders: 1420, isPopular: true, isNew: true, badges: ['Original', 'Super narx'], seller: 'Samsung Brandshop', images: ['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=700&q=85'], description: 'Galaxy AI sun’iy intellekt imkoniyatlari, 200 MP kamera va o‘rnatilgan S-Pen stilusiga ega flagman smartfon.', specs: { 'Ekran': '6.8" Dynamic AMOLED 2X', 'Protsessor': 'Snapdragon 8 Gen 3', 'Xotira': '12 GB / 512 GB' } },
+      { id: 'uzm-103', title: 'Simsiz changyutgich Dyson V15 Detect Absolute, lazer yoritgichli', category: 'appliances', brand: 'Dyson', price: 9450000, oldPrice: 11200000, rating: 5.0, reviewCount: 189, orders: 830, isPopular: true, isNew: false, badges: ['Original', 'Katta savdo'], seller: 'Dyson Premium Home', images: ['https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=700&q=85'], description: 'Ko‘rinmas chang zarralarini aniqlovchi yashil lazer nuri va LCD ekranli real vaqt tahliliga ega eng kuchli simsiz changyutgich.', specs: { 'So‘rish quvvati': '240 AW', 'Ishlash vaqti': '60 daqiqagacha', 'Filtr': 'HEPA' } },
+      { id: 'uzm-104', title: 'Noutbuk Apple MacBook Air 13.6" M2 8GB/256GB SSD, Midnight', category: 'electronics', brand: 'Apple', price: 12190000, oldPrice: 14300000, rating: 4.9, reviewCount: 512, orders: 2310, isPopular: true, isNew: false, badges: ['Original'], seller: 'MacStore Tashkent', images: ['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=700&q=85'], description: 'Yengil, yupqa va shovqinsiz MacBook Air M2 chipi bilan. 18 soatgacha batareya quvvati.', specs: { 'Ekran': '13.6" Liquid Retina', 'Chip': 'Apple M2', 'Xotira': '8 GB / 256 GB SSD' } },
+      { id: 'uzm-105', title: 'Krossovkalar Nike Air Force 1 Low \'07 White, klassik tabiiy charm', category: 'shoes', brand: 'Nike', price: 1290000, oldPrice: 1750000, rating: 4.8, reviewCount: 642, orders: 3410, isPopular: true, isNew: false, badges: ['Original', 'Katta savdo'], seller: 'SportStyle Original', images: ['https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=85'], description: 'Afsonaviy Nike Air Force 1 \'07 modeli. Tabiiy charm va Nike Air yumshoq amortizatsiya texnologiyasi.', specs: { 'Material': '100% tabiiy charm', 'O‘lchamlar': '38 – 44 EU' } },
+      { id: 'uzm-106', title: 'Simsiz quloqchinlar Apple AirPods Pro 2nd Gen (USB-C) MagSafe', category: 'electronics', brand: 'Apple', price: 2790000, oldPrice: 3390000, rating: 4.9, reviewCount: 890, orders: 4520, isPopular: true, isNew: false, badges: ['Original', 'Super narx'], seller: 'Apple Authorized UZ', images: ['https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=700&q=85'], description: '2 baravar kuchliroq faol shovqinni bostirish (ANC) va H2 chipiga ega original AirPods Pro 2.', specs: { 'Chip': 'Apple H2', 'Ishlash vaqti': '30 soat keys bilan' } },
+      { id: 'uzm-107', title: 'Smartfon Xiaomi Redmi Note 13 Pro 8/256GB, 200MP OIS kamera', category: 'smartphones', brand: 'Xiaomi', price: 3290000, oldPrice: 3950000, rating: 4.8, reviewCount: 734, orders: 5120, isPopular: true, isNew: true, badges: ['Katta savdo'], seller: 'Mi Store Uzbekistan', images: ['https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=700&q=85'], description: '120Hz AMOLED ekran, 200 MP OIS kamera va 67W turbo quvvatlagich jamlanmada.', specs: { 'Ekran': '6.67" AMOLED 120Hz', 'Kamera': '200 MP OIS', 'Batareya': '5000 mA/soat' } },
+      { id: 'uzm-108', title: 'Aerogril Tefal Easy Fry & Grill EY505815, 4.2 litr, raqamli boshqaruv', category: 'appliances', brand: 'Tefal', price: 1690000, oldPrice: 2290000, rating: 4.9, reviewCount: 412, orders: 2180, isPopular: true, isNew: false, badges: ['Katta savdo'], seller: 'Tefal Official Store', images: ['https://images.unsplash.com/photo-1648486238196-378a6a4b8b56?auto=format&fit=crop&w=700&q=85'], description: 'Yog‘siz qovurish va gril funksiyasi bir qurilmada. 8 ta avtomatik dastur.', specs: { 'Hajmi': '4.2 litr', 'Quvvati': '1550 Vt' } },
+      { id: 'uzm-109', title: 'Televizor Artel A43KF5500 43" Full HD Smart TV, Android TV', category: 'electronics', brand: 'Artel', price: 2890000, oldPrice: 3450000, rating: 4.7, reviewCount: 528, orders: 3890, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Artel Rasmiy Do‘koni', images: ['https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=700&q=85'], description: 'Ramkasiz dizayn, Android TV tizimi va ovozli boshqaruv pultiga ega Smart televizor.', specs: { 'Diagonal': '43" (109 sm)', 'Kafolat': '3 yil rasmiy kafolat' } },
+      { id: 'uzm-110', title: 'Konstruktor LEGO Technic Lamborghini Huracán Tecnica 42161, 806 qism', category: 'kids', brand: 'Lego', price: 749000, oldPrice: 960000, rating: 5.0, reviewCount: 276, orders: 1540, isPopular: true, isNew: true, badges: ['Original', 'Katta savdo'], seller: 'LEGO Certified UZ', images: ['https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&w=700&q=85'], description: '9 yoshdan oshgan bolalar uchun V10 dvigatelli haqiqiy Lamborghini Huracán konstruktori.', specs: { 'Qismlar': '806 dona', 'Yosh': '9+ yosh' } },
+      { id: 'uzm-111', title: 'Yuz kremi L’Oreal Paris Hyaluron Expert SPF 20, 50 ml, namlantiruvchi', category: 'beauty', brand: "L'Oreal", price: 115000, oldPrice: 159000, rating: 4.8, reviewCount: 1120, orders: 8420, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'L’Oreal Official', images: ['https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=700&q=85'], description: 'Ikki turdagi gialuron kislotasi bilan boyitilgan kunduzgi namlantiruvchi yuz kremi.', specs: { 'Hajmi': '50 ml', 'SPF': 'SPF 20' } },
+      { id: 'uzm-112', title: 'Qahva mashinasi DeLonghi Magnifica S ECAM 22.110.B, avtomatik', category: 'appliances', brand: 'Bosch', price: 5490000, oldPrice: 6790000, rating: 4.9, reviewCount: 204, orders: 690, isPopular: false, isNew: true, badges: ['Original'], seller: 'CoffeeHouse UZ', images: ['https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=700&q=85'], description: 'Yangi maydalangan donli qahvadan espresso va kapuchino tayyorlovchi avtomatik qahva mashinasi.', specs: { 'Bosim': '15 bar', 'Suv idishi': '1.8 litr' } },
+      { id: 'uzm-113', title: 'Erkaklar bazaviy futbolkasi 100% paxta, zich trikotaj, oversize', category: 'clothing', brand: 'Zara Style', price: 119000, oldPrice: 189000, rating: 4.7, reviewCount: 932, orders: 6710, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Tashkent Textile', images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85'], description: 'O‘zbekistonda ishlab chiqarilgan 100% tabiiy paxtadan tikilgan nafas oluvchi futbolka.', specs: { 'Tarkibi': '100% Paxta', 'O‘lchamlar': 'S, M, L, XL, XXL' } },
+      { id: 'uzm-114', title: 'Aqlli soat Apple Watch Series 9 GPS 45mm Midnight Aluminum', category: 'electronics', brand: 'Apple', price: 4890000, oldPrice: 5650000, rating: 4.9, reviewCount: 341, orders: 1590, isPopular: true, isNew: true, badges: ['Original'], seller: 'Apple Authorized UZ', images: ['https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=85'], description: 'Yangi S9 SiP protsessori, Double Tap imo-ishora boshqaruvi va yorqin Retina displey.', specs: { 'Korpus': '45 mm', 'Himoya': 'WR50' } },
+      { id: 'uzm-115', title: 'Krossovkalar Nike Air Max 270 React, yugurish va kundalik kiyish uchun', category: 'shoes', brand: 'Nike', price: 1450000, oldPrice: 1990000, rating: 4.8, reviewCount: 388, orders: 1920, isPopular: false, isNew: true, badges: ['Original', 'Katta savdo'], seller: 'SportStyle Original', images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85'], description: '270 darajali havo yostig‘i va yengil to‘rli ustki qism maksimal qulaylik beradi.', specs: { 'Amortizatsiya': 'Max Air 270', 'O‘lchamlar': '39 – 45 EU' } },
+      { id: 'uzm-116', title: 'Robot-changyutgich Xiaomi Robot Vacuum S10+, nam va quruq tozalash', category: 'appliances', brand: 'Xiaomi', price: 3690000, oldPrice: 4490000, rating: 4.8, reviewCount: 467, orders: 2340, isPopular: true, isNew: false, badges: ['Katta savdo'], seller: 'Mi Store Uzbekistan', images: ['https://images.unsplash.com/photo-1589894404892-7310b92ea7a2?auto=format&fit=crop&w=700&q=85'], description: 'LDS lazerli navigatsiya va 4000 Pa so‘rish kuchiga ega aqlli robot-changyutgich.', specs: { 'So‘rish kuchi': '4000 Pa', 'Batareya': '5200 mA/soat' } },
+      { id: 'uzm-117', title: 'Noutbuk uchun shahar ryukzagi Xiaomi Classic Business Backpack 2, 15.6"', category: 'accessories', brand: 'Xiaomi', price: 349000, oldPrice: 480000, rating: 4.9, reviewCount: 1245, orders: 9120, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Mi Store Uzbekistan', images: ['https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85'], description: 'Suv o‘tkazmaydigan matodan tikilgan, 15.6 dyuymli noutbuk bo‘limiga ega ryukzak.', specs: { 'Hajmi': '18 litr', 'Noutbuk': '15.6" gacha' } },
+      { id: 'uzm-118', title: 'Tova-grill Tefal Emotion 26 sm, zanglamaydigan po‘lat, indikatorli', category: 'home-garden', brand: 'Tefal', price: 429000, oldPrice: 590000, rating: 4.8, reviewCount: 389, orders: 2740, isPopular: false, isNew: false, badges: ['Katta savdo'], seller: 'Tefal Official Store', images: ['https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=700&q=85'], description: 'Thermo-Signal qizish indikatori va Titan qoplamali mustahkam oshxona tovasi.', specs: { 'Diametri': '26 sm', 'Plita': 'Gaz, elektr, induksiya' } },
+      { id: 'uzm-119', title: 'Soch quritgich fen Dyson Supersonic HD07, 5 ta magnitli nasadka bilan', category: 'beauty', brand: 'Dyson', price: 5290000, oldPrice: 6100000, rating: 5.0, reviewCount: 512, orders: 1840, isPopular: true, isNew: false, badges: ['Original', 'Super narx'], seller: 'Dyson Premium Home', images: ['https://images.unsplash.com/photo-1522338140262-f46f5913618a?auto=format&fit=crop&w=700&q=85'], description: 'Sochlarni haddan tashqari qizib ketishdan himoya qiluvchi aqlli harorat nazoratiga ega fen.', specs: { 'Quvvati': '1600 Vt', 'Nasadkalar': '5 dona' } },
+      { id: 'uzm-120', title: 'Elektr samokat Xiaomi Electric Scooter 4 Pro, 55 km masofa, 700 Vt', category: 'sports', brand: 'Xiaomi', price: 6890000, oldPrice: 7990000, rating: 4.8, reviewCount: 164, orders: 540, isPopular: false, isNew: true, badges: ['Katta savdo'], seller: 'Mi Store Uzbekistan', images: ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=700&q=85'], description: '10 dyuymli DuraGel shinalar va bir quvvatda 55 km gacha yurish zaxirasi.', specs: { 'Masofa': '55 km', 'Quvvati': '700 Vt' } },
+      { id: 'uzm-121', title: 'Donli qahva Lavazza Qualità Oro 1 kg, 100% Arabika, o‘rtacha qovurilgan', category: 'food', brand: 'Lavazza', price: 319000, oldPrice: 395000, rating: 4.9, reviewCount: 842, orders: 5430, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Gourmet Market UZ', images: ['https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=700&q=85'], description: '100% Arabika navlaridan tayyorlangan xushbo‘y italyan donli qahvasi.', specs: { 'Tarkibi': '100% Arabika', 'Og‘irligi': '1000 gr' } },
+      { id: 'uzm-122', title: 'Planshet Samsung Galaxy Tab S9 FE 6/128GB Wi-Fi, S-Pen jamlanmada', category: 'electronics', brand: 'Samsung', price: 4990000, oldPrice: 5890000, rating: 4.8, reviewCount: 215, orders: 980, isPopular: false, isNew: true, badges: ['Original'], seller: 'Samsung Brandshop', images: ['https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=700&q=85'], description: 'IP68 suv va changdan himoyalangan planshet va stilus.', specs: { 'Ekran': '10.9" 90Hz', 'Xotira': '6/128 GB' } },
+      { id: 'uzm-123', title: 'Kir yuvish mashinasi Bosch Serie 4 WGA142X1ME, 9 kg, EcoSilence Drive', category: 'appliances', brand: 'Bosch', price: 6790000, oldPrice: 7850000, rating: 4.9, reviewCount: 178, orders: 720, isPopular: false, isNew: false, badges: ['Original'], seller: 'Bosch Rasmiy Do‘kon', images: ['https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=700&q=85'], description: 'Shovqinsiz invertor motor va bug‘ bilan tozalash funksiyasiga ega kir yuvish mashinasi.', specs: { 'Yuklama': '9 kg', 'Energiya sinfi': 'A+++' } },
+      { id: 'uzm-124', title: 'Ayollar xudi va shim sport kostyumi, yumshoq flisli trikotaj', category: 'clothing', brand: 'Zara Style', price: 389000, oldPrice: 540000, rating: 4.8, reviewCount: 495, orders: 3120, isPopular: true, isNew: true, badges: ['Katta savdo'], seller: 'ModaLine UZ', images: ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=85'], description: 'Zamonaviy erkin bichimdagi ikki qismli ayollar sport kostyumi.', specs: { 'Tarkibi': '85% paxta, 15% poliester', 'O‘lchamlar': 'XS, S, M, L' } },
+      { id: 'uzm-125', title: 'Quyosh ko‘zoynagi Ray-Ban Aviator Classic RB3025, UV400 himoya', category: 'accessories', brand: 'Ray-Ban', price: 1690000, oldPrice: 2150000, rating: 4.9, reviewCount: 143, orders: 620, isPopular: false, isNew: false, badges: ['Original'], seller: 'Optika Lux UZ', images: ['https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=700&q=85'], description: 'Mineral shisha linzali klassik metall gardishli quyosh ko‘zoynagi.', specs: { 'Linza': 'Mineral shisha', 'Himoya': '100% UV400' } },
+      { id: 'uzm-126', title: 'Bolalar aravachasi 2-in-1 transformer, yengil alyuminiy rama', category: 'kids', brand: 'Chicco', price: 2190000, oldPrice: 2790000, rating: 4.8, reviewCount: 234, orders: 890, isPopular: false, isNew: true, badges: ['Katta savdo'], seller: 'BabyWorld UZ', images: ['https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=85'], description: '0 dan 3 yoshgacha mo‘ljallangan yengil va oson yig‘iluvchi zamonaviy kolyaska.', specs: { 'Yosh': '0 – 36 oy', 'Vazni': '9.8 kg' } },
+      { id: 'uzm-127', title: 'Choyshablar to‘plami 2 kishilik, 100% Saten paxta, 4 ta yostiq jildi', category: 'home-garden', brand: 'Artel Home', price: 349000, oldPrice: 460000, rating: 4.7, reviewCount: 618, orders: 4120, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Samarkand Cotton', images: ['https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=700&q=85'], description: 'Ipakdek mayin 100% tabiiy saten matosidan tikilgan yotoq choyshablari to‘plami.', specs: { 'Material': '100% Saten paxta', 'O‘lcham': '2 kishilik Euro' } },
+      { id: 'uzm-128', title: 'Smartfon Apple iPhone 15 128GB, Pink, Dynamic Island, 48MP kamera', category: 'smartphones', brand: 'Apple', price: 10490000, oldPrice: 12100000, rating: 4.9, reviewCount: 512, orders: 2790, isPopular: true, isNew: false, badges: ['Original', 'Super narx'], seller: 'Apple Authorized UZ', images: ['https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&w=700&q=85'], description: 'Dynamic Island, 48 MP asosiy kamera va USB-C portiga ega zamonaviy iPhone 15.', specs: { 'Ekran': '6.1" OLED', 'Xotira': '128 GB' } },
+      { id: 'uzm-129', title: 'O‘yin konsoli Sony PlayStation 5 Slim 1TB SSD + DualSense geympad', category: 'electronics', brand: 'Sony', price: 6590000, oldPrice: 7490000, rating: 5.0, reviewCount: 478, orders: 2150, isPopular: true, isNew: true, badges: ['Original', 'Katta savdo'], seller: 'GameZone Tashkent', images: ['https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=700&q=85'], description: '4K 120Hz grafikaga ega yangi ixcham PS5 Slim versiyasi va DualSense kontrolleri.', specs: { 'Xotira': '1 TB SSD', 'Ruxsat': '4K UHD' } },
+      { id: 'uzm-130', title: 'Gantellar to‘plami yig‘iladigan 20 kg (2x10 kg), rezina qoplamali', category: 'sports', brand: 'SportPro', price: 490000, oldPrice: 650000, rating: 4.8, reviewCount: 312, orders: 1890, isPopular: false, isNew: false, badges: ['Super narx'], seller: 'FitMarket UZ', images: ['https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=700&q=85'], description: 'Uy sharoitida mashq qilish uchun polni tirnamaydigan yig‘ma gantellar to‘plami.', specs: { 'Vazn': '20 kg (2x10 kg)', 'Qoplama': 'Rezina' } },
+      { id: 'uzm-131', title: 'Parfyumlangan suv Yves Saint Laurent Libre Eau de Parfum 50 ml', category: 'beauty', brand: "L'Oreal", price: 1490000, oldPrice: 1890000, rating: 4.9, reviewCount: 289, orders: 1340, isPopular: true, isNew: false, badges: ['Original'], seller: 'Parfum Gallery UZ', images: ['https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=700&q=85'], description: 'Fransuz lavandasi va Marokash apelsin gullari uyg‘unligidagi original ayollar atiri.', specs: { 'Hajmi': '50 ml', 'Turi': 'Eau de Parfum' } },
+      { id: 'uzm-132', title: 'O‘zbekistonning tabiiy tog‘ asali, shisha idishda 1000 gr, 100% tabiiy', category: 'food', brand: 'Mountain Honey', price: 95000, oldPrice: 135000, rating: 4.9, reviewCount: 754, orders: 6230, isPopular: true, isNew: false, badges: ['Super narx'], seller: 'Tabiat Ne’matlari', images: ['https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=700&q=85'], description: 'Zomin tog‘ o‘tloqlaridan yig‘ilgan, shakarsiz toza tabiiy asal.', specs: { 'Og‘irligi': '1000 gr', 'Kelib chiqishi': 'Zomin, Jizzax' } }
+    ];
+
+    // ------------------------------------------------------------------------
+    // C. APPLICATION STATE & LOCALSTORAGE PERSISTENCE
+    // ------------------------------------------------------------------------
+    const state = {
+      cart: JSON.parse(localStorage.getItem('uzum_html_cart') || '[]'),
+      favorites: JSON.parse(localStorage.getItem('uzum_html_favs') || '["uzm-101","uzm-103","uzm-105"]'),
+      city: localStorage.getItem('uzum_html_city') || 'Toshkent',
+      lang: 'uz',
+      user: JSON.parse(localStorage.getItem('uzum_html_user') || 'null'),
+      heroIndex: 0,
+      popularVisibleCount: 10,
+      activeMegaCatId: 'electronics',
+      catalogFilters: {
+        category: 'all',
+        search: '',
+        minPrice: '',
+        maxPrice: '',
+        brands: [],
+        ratingHigh: false,
+        discountOnly: false,
+        originalOnly: false,
+        badge: '',
+        sort: 'popular'
+      }
+    };
+
+    function saveState() {
+      localStorage.setItem('uzum_html_cart', JSON.stringify(state.cart));
+      localStorage.setItem('uzum_html_favs', JSON.stringify(state.favorites));
+      localStorage.setItem('uzum_html_city', state.city);
+      localStorage.setItem('uzum_html_user', JSON.stringify(state.user));
+      updateHeaderCounters();
+    }
+
+    function formatPrice(num) {
+      return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
+    function getMonthlyInstallment(price, months = 12) {
+      const factor = months === 12 ? 1.18 : months === 6 ? 1.09 : 1.04;
+      return Math.ceil((price * factor) / months / 100) * 100;
+    }
+
+    function getDiscountPercent(price, oldPrice) {
+      if (!oldPrice || oldPrice <= price) return 0;
+      return Math.round(((oldPrice - price) / oldPrice) * 100);
+    }
+
+    // ------------------------------------------------------------------------
+    // D. HEADER, MEGA-MENU & CATEGORY BAR INITIALIZATION
+    // ------------------------------------------------------------------------
+    function initNavigation() {
+      // Category Top Strip
+      const bar = document.getElementById('categoryBarInner');
+      bar.innerHTML = `
+        <button type="button" class="cat-nav-highlight" onclick="openCatalogView({})">
+          <span class="yellow-percent-badge">%</span>
+          <span>Muddatli to'lov</span>
+        </button>
+        <button type="button" class="cat-nav-highlight" style="color:var(--uzum-purple);" onclick="openCatalogView({ discountOnly: true })">
+          <span>🔥 Katta savdo</span>
+        </button>
+        ${CATEGORIES.slice(0, 9).map(c => `
+          <button type="button" class="cat-nav-item" onclick="openCatalogView({ category: '${c.id}' })">${c.name}</button>
+        `).join('')}
+        <button type="button" class="cat-nav-item" style="margin-left:auto;" onclick="openCatalogView({})">Yana ▾</button>
+      `;
+
+      // Mega Menu Left Categories
+      renderMegaMenu();
+    }
+
+    function renderMegaMenu() {
+      const catList = document.getElementById('megaCatList');
+      const subPanel = document.getElementById('megaSubPanel');
+      const activeCat = CATEGORIES.find(c => c.id === state.activeMegaCatId) || CATEGORIES[0];
+
+      catList.innerHTML = CATEGORIES.map(cat => `
+        <button
+          type="button"
+          class="mega-cat-item ${cat.id === activeCat.id ? 'active' : ''}"
+          onmouseenter="setActiveMegaCategory('${cat.id}')"
+          onclick="closeMegaMenu(); openCatalogView({ category: '${cat.id}' })"
+        >
+          <span class="mega-cat-left">
+            <span>${cat.name}</span>
+          </span>
+          <span>›</span>
+        </button>
+      `).join('');
+
+      subPanel.innerHTML = `
+        <div class="mega-sub-header">
+          <button type="button" class="mega-sub-title" onclick="closeMegaMenu(); openCatalogView({ category: '${activeCat.id}' })">
+            <span>${activeCat.name}</span>
+            <span>›</span>
+          </button>
+        </div>
+        <div class="mega-sub-grid">
+          ${activeCat.subs.map(sub => `
+            <button type="button" class="mega-sub-link" onclick="closeMegaMenu(); openCatalogView({ category: '${activeCat.id}' })">${sub}</button>
+          `).join('')}
+        </div>
+        <div class="mega-promo-card">
+          <div>
+            <span class="hero-badge" style="margin-bottom:6px;">UZUM NASIYA 0%</span>
+            <div style="font-size:16px;font-weight:700;">${activeCat.name} bo‘limidagi barcha tovarlar 12 oylik muddatli to‘lovga!</div>
+          </div>
+          <button type="button" class="hero-cta-btn" onclick="closeMegaMenu(); openCatalogView({ category: '${activeCat.id}' })">Ko‘rish</button>
+        </div>
+      `;
+    }
+
+    function setActiveMegaCategory(catId) {
+      state.activeMegaCatId = catId;
+      renderMegaMenu();
+    }
+
+    function toggleMegaMenu() {
+      const menu = document.getElementById('megaMenu');
+      const btn = document.getElementById('katalogToggleBtn');
+      const openIcon = document.getElementById('katalogIconOpen');
+      const closeIcon = document.getElementById('katalogIconClose');
+      const isHidden = menu.classList.contains('hidden');
+
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        btn.classList.add('active');
+        openIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      } else {
+        closeMegaMenu();
+      }
+    }
+
+    function closeMegaMenu() {
+      document.getElementById('megaMenu').classList.add('hidden');
+      document.getElementById('katalogToggleBtn').classList.remove('active');
+      document.getElementById('katalogIconOpen').classList.remove('hidden');
+      document.getElementById('katalogIconClose').classList.add('hidden');
+    }
+
+    // ------------------------------------------------------------------------
+    // E. HERO SLIDER ENGINE
+    // ------------------------------------------------------------------------
+    let heroInterval = null;
+
+    function initHeroSlider() {
+      const track = document.getElementById('heroTrack');
+      const dots = document.getElementById('heroDots');
+
+      track.innerHTML = HERO_SLIDES.map(slide => `
+        <div class="hero-slide" style="background:${slide.bg};" onclick="openCatalogView({ category: '${slide.category}' })">
+          <div>
+            <span class="hero-badge">${slide.badge}</span>
+            <h2 class="hero-title">${slide.title}</h2>
+            <p class="hero-subtitle">${slide.subtitle}</p>
+            <span class="hero-cta-btn">${slide.cta} →</span>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-img-frame">
+              <img src="${slide.image}" alt="${slide.title}" />
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      dots.innerHTML = HERO_SLIDES.map((_, idx) => `
+        <button type="button" class="hero-dot ${idx === 0 ? 'active' : ''}" onclick="event.stopPropagation(); goToHeroSlide(${idx})" aria-label="Slayd ${idx + 1}"></button>
+      `).join('');
+
+      startHeroAutoplay();
+    }
+
+    function goToHeroSlide(index) {
+      state.heroIndex = (index + HERO_SLIDES.length) % HERO_SLIDES.length;
+      document.getElementById('heroTrack').style.transform = `translateX(-${state.heroIndex * 100}%)`;
+      document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === state.heroIndex);
+      });
+    }
+
+    function startHeroAutoplay() {
+      clearInterval(heroInterval);
+      heroInterval = setInterval(() => goToHeroSlide(state.heroIndex + 1), 5000);
+    }
+
+    // ------------------------------------------------------------------------
+    // F. PRODUCT CARD COMPONENT RENDERER
+    // ------------------------------------------------------------------------
+    function createProductCardHTML(product) {
+      const isFav = state.favorites.includes(product.id);
+      const discount = getDiscountPercent(product.price, product.oldPrice);
+      const monthly = getMonthlyInstallment(product.price, 12);
+
+      const badgesHTML = (product.badges || []).map(b => {
+        const cls = b === 'Original' ? 'original' : b === 'Super narx' ? 'super' : '';
+        return `<span class="micro-badge ${cls}">${b}</span>`;
+      }).join('');
+
+      const discountBadgeHTML = (discount > 0 && (!product.badges || product.badges.length < 2))
+        ? `<span class="micro-badge">-${discount}%</span>`
+        : '';
+
+      return `
+        <article class="product-card" onclick="openProductModal('${product.id}')">
+          <div class="card-img-wrap">
+            <img class="card-img" src="${product.images[0]}" alt="${product.title}" loading="lazy" />
+            <button
+              type="button"
+              class="card-fav-btn ${isFav ? 'active' : ''}"
+              data-fav-id="${product.id}"
+              onclick="event.stopPropagation(); handleToggleFavorite('${product.id}', this)"
+              aria-label="Saralanganlarga qo'shish"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.1">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </button>
+            <div class="card-badges">
+              ${badgesHTML}
+              ${discountBadgeHTML}
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div>
+              <h3 class="card-title">${product.title}</h3>
+              <div class="card-rating">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB54C" stroke="#FFB54C"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <strong>${product.rating.toFixed(1)}</strong>
+                <span>(${product.reviewCount} sharh)</span>
+              </div>
+              <span class="installment-pill">${formatPrice(monthly)} so‘m/oyiga</span>
+            </div>
+
+            <div class="card-footer">
+              <div>
+                ${product.oldPrice > product.price ? `<div class="card-old-price">${formatPrice(product.oldPrice)} so‘m</div>` : ''}
+                <div class="card-price">${formatPrice(product.price)} so‘m</div>
+              </div>
+              <button
+                type="button"
+                class="card-cart-btn"
+                onclick="event.stopPropagation(); handleAddToCart('${product.id}', this)"
+                aria-label="Savatga qo'shish"
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderHomeSections() {
+      const popular = PRODUCTS.filter(p => p.isPopular);
+      document.getElementById('popularGrid').innerHTML = popular
+        .slice(0, state.popularVisibleCount)
+        .map(createProductCardHTML)
+        .join('');
+
+      const loadMoreWrap = document.getElementById('popularLoadMoreWrap');
+      const loadMoreBtn = document.getElementById('popularLoadMoreBtn');
+      if (state.popularVisibleCount >= popular.length) {
+        loadMoreWrap.classList.add('hidden');
+      } else {
+        loadMoreWrap.classList.remove('hidden');
+        loadMoreBtn.textContent = `Yana ko‘rsatish ${Math.min(10, popular.length - state.popularVisibleCount)}`;
+      }
+
+      const discounted = PRODUCTS.filter(p => getDiscountPercent(p.price, p.oldPrice) >= 18).slice(0, 10);
+      document.getElementById('discountGrid').innerHTML = discounted.map(createProductCardHTML).join('');
+
+      const newest = PRODUCTS.filter(p => p.isNew).slice(0, 5);
+      document.getElementById('newestGrid').innerHTML = newest.map(createProductCardHTML).join('');
+
+      const smartphones = PRODUCTS.filter(p => p.category === 'smartphones' || p.category === 'electronics').slice(0, 5);
+      document.getElementById('smartphonesGrid').innerHTML = smartphones.map(createProductCardHTML).join('');
+    }
+
+    // ------------------------------------------------------------------------
+    // G. LIVE SEARCH AUTOCOMPLETE & SEARCH RESULTS
+    // ------------------------------------------------------------------------
+    function initSearch() {
+      const input = document.getElementById('searchInput');
+      const dropdown = document.getElementById('searchDropdown');
+      const clearBtn = document.getElementById('searchClearBtn');
+      const form = document.getElementById('searchForm');
+
+      function updateSearchDropdown() {
+        const q = input.value.trim();
+        clearBtn.classList.toggle('hidden', q.length === 0);
+
+        if (!q) {
+          const popularTags = ['iPhone 15 Pro Max', 'Dyson V15', 'MacBook Air M2', 'Nike Air Force', 'Xiaomi'];
+          dropdown.innerHTML = `
+            <div class="search-dropdown-section">
+              <div class="search-dropdown-label">Ommabop so‘rovlar</div>
+              <div class="search-tags">
+                ${popularTags.map(tag => `
+                  <button type="button" class="search-tag-btn" onclick="executeSearch('${tag}')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span>${tag}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          const lower = q.toLowerCase();
+          const matches = PRODUCTS.filter(p =>
+            p.title.toLowerCase().includes(lower) ||
+            p.brand.toLowerCase().includes(lower)
+          ).slice(0, 5);
+
+          if (matches.length > 0) {
+            dropdown.innerHTML = `
+              ${matches.map(m => `
+                <button type="button" class="search-suggestion-item" onclick="closeSearchDropdown(); openProductModal('${m.id}')">
+                  <img class="search-suggestion-thumb" src="${m.images[0]}" alt="" />
+                  <div class="search-suggestion-info">
+                    <div class="search-suggestion-title">${m.title}</div>
+                    <div class="search-suggestion-price">${formatPrice(m.price)} so‘m</div>
+                  </div>
+                  <span style="color:var(--uzum-text-muted);">›</span>
+                </button>
+              `).join('')}
+              <button type="button" class="search-all-results-btn" onclick="executeSearch('${q.replace(/'/g, "\\'")}')">
+                Barcha natijalarni ko‘rish («${q}»)
+              </button>
+            `;
+          } else {
+            dropdown.innerHTML = `
+              <div style="padding:18px;text-align:center;font-size:13px;color:var(--uzum-text-muted);">
+                «${q}» bo‘yicha mos mahsulotlar topilmadi
+              </div>
+            `;
+          }
+        }
+        dropdown.classList.remove('hidden');
+      }
+
+      input.addEventListener('focus', updateSearchDropdown);
+      input.addEventListener('input', updateSearchDropdown);
+
+      clearBtn.addEventListener('click', () => {
+        input.value = '';
+        updateSearchDropdown();
+        input.focus();
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        executeSearch(input.value.trim());
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!document.getElementById('searchWrapper').contains(e.target)) {
+          closeSearchDropdown();
+        }
+      });
+    }
+
+    function closeSearchDropdown() {
+      document.getElementById('searchDropdown').classList.add('hidden');
+    }
+
+    function executeSearch(query) {
+      document.getElementById('searchInput').value = query;
+      closeSearchDropdown();
+      openCatalogView({ search: query });
+    }
+
+    // ------------------------------------------------------------------------
+    // H. CATALOG FILTER & SORT VIEW
+    // ------------------------------------------------------------------------
+    function initCatalogSidebar() {
+      const catList = document.getElementById('filterCategoriesList');
+      catList.innerHTML = `
+        <button type="button" class="filter-cat-btn active" data-cat="all" onclick="setCatalogCategory('all')">Barcha toifalar</button>
+        ${CATEGORIES.map(c => `
+          <button type="button" class="filter-cat-btn" data-cat="${c.id}" onclick="setCatalogCategory('${c.id}')">${c.name}</button>
+        `).join('')}
+      `;
+
+      const brands = Array.from(new Set(PRODUCTS.map(p => p.brand))).sort();
+      document.getElementById('filterBrandsList').innerHTML = brands.map(b => `
+        <label class="checkbox-label">
+          <input type="checkbox" value="${b}" onchange="toggleCatalogBrand('${b}')" />
+          <span>${b}</span>
+        </label>
+      `).join('');
+
+      document.getElementById('filterMinPrice').addEventListener('input', (e) => {
+        state.catalogFilters.minPrice = e.target.value;
+        renderCatalogProducts();
+      });
+      document.getElementById('filterMaxPrice').addEventListener('input', (e) => {
+        state.catalogFilters.maxPrice = e.target.value;
+        renderCatalogProducts();
+      });
+      document.getElementById('filterRatingHigh').addEventListener('change', (e) => {
+        state.catalogFilters.ratingHigh = e.target.checked;
+        renderCatalogProducts();
+      });
+      document.getElementById('filterDiscountOnly').addEventListener('change', (e) => {
+        state.catalogFilters.discountOnly = e.target.checked;
+        renderCatalogProducts();
+      });
+      document.getElementById('filterOriginalOnly').addEventListener('change', (e) => {
+        state.catalogFilters.originalOnly = e.target.checked;
+        renderCatalogProducts();
+      });
+      document.getElementById('catalogSortSelect').addEventListener('change', (e) => {
+        state.catalogFilters.sort = e.target.value;
+        renderCatalogProducts();
+      });
+      document.getElementById('resetFiltersBtn').addEventListener('click', resetCatalogFilters);
+    }
+
+    function showHomeView() {
+      document.getElementById('homeView').classList.remove('hidden');
+      document.getElementById('catalogView').classList.add('hidden');
+      document.getElementById('mobNavHome').classList.add('active');
+      document.getElementById('mobNavCatalog').classList.remove('active');
+      renderHomeSections();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openCatalogView(overrides = {}) {
+      state.catalogFilters = {
+        category: overrides.category || 'all',
+        search: overrides.search || '',
+        minPrice: '',
+        maxPrice: '',
+        brands: [],
+        ratingHigh: false,
+        discountOnly: Boolean(overrides.discountOnly),
+        originalOnly: overrides.badge === 'Original',
+        badge: overrides.badge || '',
+        sort: overrides.sort || 'popular'
+      };
+
+      // Sync UI inputs
+      document.getElementById('filterMinPrice').value = '';
+      document.getElementById('filterMaxPrice').value = '';
+      document.getElementById('filterRatingHigh').checked = false;
+      document.getElementById('filterDiscountOnly').checked = state.catalogFilters.discountOnly;
+      document.getElementById('filterOriginalOnly').checked = state.catalogFilters.originalOnly;
+      document.getElementById('catalogSortSelect').value = state.catalogFilters.sort;
+      document.querySelectorAll('#filterBrandsList input').forEach(cb => cb.checked = false);
+
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('catalogView').classList.remove('hidden');
+      document.getElementById('mobNavHome').classList.remove('active');
+      document.getElementById('mobNavCatalog').classList.add('active');
+
+      renderCatalogProducts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setCatalogCategory(catId) {
+      state.catalogFilters.category = catId;
+      state.catalogFilters.search = '';
+      renderCatalogProducts();
+    }
+
+    function toggleCatalogBrand(brand) {
+      const idx = state.catalogFilters.brands.indexOf(brand);
+      if (idx > -1) state.catalogFilters.brands.splice(idx, 1);
+      else state.catalogFilters.brands.push(brand);
+      renderCatalogProducts();
+    }
+
+    function resetCatalogFilters() {
+      document.getElementById('searchInput').value = '';
+      openCatalogView({});
+    }
+
+    function renderCatalogProducts() {
+      const f = state.catalogFilters;
+      document.querySelectorAll('.filter-cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === f.category);
+      });
+
+      let list = [...PRODUCTS];
+
+      if (f.category && f.category !== 'all') {
+        list = list.filter(p => p.category === f.category);
+      }
+      if (f.search) {
+        const q = f.search.toLowerCase();
+        list = list.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.brand.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q)
+        );
+      }
+      if (f.minPrice !== '' && !isNaN(Number(f.minPrice))) {
+        list = list.filter(p => p.price >= Number(f.minPrice));
+      }
+      if (f.maxPrice !== '' && !isNaN(Number(f.maxPrice))) {
+        list = list.filter(p => p.price <= Number(f.maxPrice));
+      }
+      if (f.brands.length > 0) {
+        list = list.filter(p => f.brands.includes(p.brand));
+      }
+      if (f.ratingHigh) {
+        list = list.filter(p => p.rating >= 4.8);
+      }
+      if (f.discountOnly) {
+        list = list.filter(p => p.oldPrice && p.oldPrice > p.price);
+      }
+      if (f.originalOnly) {
+        list = list.filter(p => p.badges && p.badges.includes('Original'));
+      }
+
+      if (f.sort === 'price-asc') list.sort((a, b) => a.price - b.price);
+      else if (f.sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+      else if (f.sort === 'rating') list.sort((a, b) => b.rating - a.rating);
+      else if (f.sort === 'newest') list.sort((a, b) => Number(b.isNew) - Number(a.isNew));
+      else list.sort((a, b) => b.orders - a.orders);
+
+      const catObj = CATEGORIES.find(c => c.id === f.category);
+      const heading = f.search
+        ? `«${f.search}» bo‘yicha qidiruv natijalari`
+        : catObj
+        ? catObj.name
+        : f.discountOnly
+        ? 'Katta savdo va chegirmalar'
+        : 'Barcha mahsulotlar';
+
+      document.getElementById('catalogHeading').textContent = heading;
+      document.getElementById('catalogBreadcrumb').textContent = heading;
+      document.getElementById('catalogResultCount').textContent = `${list.length} ta mahsulot`;
+
+      const grid = document.getElementById('catalogProductsGrid');
+      const empty = document.getElementById('catalogEmptyState');
+
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+      } else {
+        empty.classList.add('hidden');
+        grid.innerHTML = list.map(createProductCardHTML).join('');
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // I. CART & FAVORITES INTERACTIONS + TOASTS
+    // ------------------------------------------------------------------------
+    function handleAddToCart(productId, btnEl = null) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = state.cart.find(item => item.productId === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        state.cart.push({ productId, quantity: 1 });
+      }
+      saveState();
+
+      if (btnEl) {
+        btnEl.classList.add('added');
+        setTimeout(() => btnEl.classList.remove('added'), 450);
+      }
+
+      showToast({
+        title: 'Mahsulot savatga qo‘shildi',
+        subtitle: product.title,
+        image: product.images[0],
+        actionLabel: 'Savatga o‘tish →',
+        onAction: openCartDrawer
+      });
+    }
+
+    function updateCartQty(productId, delta) {
+      const idx = state.cart.findIndex(item => item.productId === productId);
+      if (idx === -1) return;
+      state.cart[idx].quantity += delta;
+      if (state.cart[idx].quantity <= 0) {
+        state.cart.splice(idx, 1);
+      }
+      saveState();
+      renderCartDrawer();
+    }
+
+    function removeCartItem(productId) {
+      state.cart = state.cart.filter(item => item.productId !== productId);
+      saveState();
+      renderCartDrawer();
+    }
+
+    function handleToggleFavorite(productId, btnEl = null) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const idx = state.favorites.indexOf(productId);
+      const isAdding = idx === -1;
+
+      if (isAdding) state.favorites.push(productId);
+      else state.favorites.splice(idx, 1);
+
+      saveState();
+
+      // Update all heart buttons for this product across the page
+      document.querySelectorAll(`[data-fav-id="${productId}"]`).forEach(btn => {
+        btn.classList.toggle('active', isAdding);
+        const svg = btn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', isAdding ? 'currentColor' : 'none');
+      });
+
+      if (btnEl) {
+        btnEl.classList.add('pulse');
+        setTimeout(() => btnEl.classList.remove('pulse'), 380);
+      }
+
+      if (!document.getElementById('favDrawerBackdrop').classList.contains('hidden')) {
+        renderFavDrawer();
+      }
+
+      showToast({
+        title: isAdding ? 'Saralanganlarga qo‘shildi' : 'Saralanganlardan o‘chirildi',
+        subtitle: product.title,
+        image: product.images[0]
+      });
+    }
+
+    function updateHeaderCounters() {
+      const cartTotal = state.cart.reduce((s, i) => s + i.quantity, 0);
+      const favTotal = state.favorites.length;
+
+      const hCart = document.getElementById('headerCartCount');
+      const mCart = document.getElementById('mobCartBadge');
+      hCart.textContent = cartTotal;
+      mCart.textContent = cartTotal;
+      hCart.classList.toggle('hidden', cartTotal === 0);
+      mCart.classList.toggle('hidden', cartTotal === 0);
+
+      const hFav = document.getElementById('headerFavCount');
+      const mFav = document.getElementById('mobFavBadge');
+      hFav.textContent = favTotal;
+      mFav.textContent = favTotal;
+      hFav.classList.toggle('hidden', favTotal === 0);
+      mFav.classList.toggle('hidden', favTotal === 0);
+    }
+
+    // Cart Drawer
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById('cartDrawerBackdrop').classList.remove('hidden');
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.add('hidden');
+    }
+
+    function renderCartDrawer() {
+      const body = document.getElementById('cartDrawerBody');
+      const footer = document.getElementById('cartDrawerFooter');
+      const totalLabel = document.getElementById('drawerCartTotalItems');
+
+      const items = state.cart
+        .map(c => ({ ...c, product: PRODUCTS.find(p => p.id === c.productId) }))
+        .filter(c => c.product);
+
+      const count = items.reduce((s, i) => s + i.quantity, 0);
+      totalLabel.textContent = count > 0 ? `(${count} mahsulot)` : '';
+
+      if (items.length === 0) {
+        footer.classList.add('hidden');
+        body.innerHTML = `
+          <div style="text-align:center;padding:64px 16px;">
+            <div style="width:76px;height:76px;border-radius:50%;background:var(--uzum-surface);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--uzum-purple);">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <h3 style="font-size:19px;font-weight:700;margin-bottom:8px;">Savatda hozircha mahsulot yo‘q</h3>
+            <p style="font-size:13.5px;color:var(--uzum-text-muted);margin-bottom:20px;">Bosh sahifadagi to‘plamlardan boshlang yoki kerakli mahsulotni izlang</p>
+            <button type="button" class="primary-purple-btn" style="max-width:220px;" onclick="closeCartDrawer(); showHomeView();">Xaridni boshlash</button>
+          </div>
+        `;
+        return;
+      }
+
+      let totalPrice = 0;
+      let totalOldPrice = 0;
+
+      body.innerHTML = `
+        <div style="background:rgba(0,168,89,0.08);color:var(--uzum-green);padding:10px 12px;border-radius:10px;font-size:12.5px;font-weight:600;margin-bottom:14px;">
+          ✓ ${state.city} topshirish punktiga ertaga bepul yetkazib beramiz
+        </div>
+        ${items.map(({ product, quantity }) => {
+          totalPrice += product.price * quantity;
+          totalOldPrice += (product.oldPrice || product.price) * quantity;
+          return `
+            <div class="cart-item">
+              <img class="cart-item-img" src="${product.images[0]}" alt="" />
+              <div class="cart-item-info">
+                <div class="cart-item-title">${product.title}</div>
+                <div class="cart-item-meta">Sotuvchi: ${product.seller}</div>
+                <div class="cart-item-controls">
+                  <div class="qty-stepper">
+                    <button type="button" class="qty-btn" onclick="updateCartQty('${product.id}', -1)">−</button>
+                    <span class="qty-val">${quantity}</span>
+                    <button type="button" class="qty-btn" onclick="updateCartQty('${product.id}', 1)">+</button>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:15px;font-weight:700;">${formatPrice(product.price * quantity)} so‘m</div>
+                    <button type="button" style="font-size:11.5px;color:var(--uzum-text-muted);" onclick="removeCartItem('${product.id}')">O‘chirish</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      `;
+
+      const savings = Math.max(0, totalOldPrice - totalPrice);
+      footer.classList.remove('hidden');
+      footer.innerHTML = `
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--uzum-text-secondary);margin-bottom:6px;">
+          <span>Mahsulotlar (${count}):</span>
+          <span>${formatPrice(totalOldPrice)} so‘m</span>
+        </div>
+        ${savings > 0 ? `
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--uzum-green);font-weight:600;margin-bottom:8px;">
+            <span>Tejovingiz:</span>
+            <span>-${formatPrice(savings)} so‘m</span>
+          </div>
+        ` : ''}
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;">
+          <span style="font-size:15px;font-weight:600;">Jami:</span>
+          <div style="text-align:right;">
+            <div style="font-size:21px;font-weight:800;">${formatPrice(totalPrice)} so‘m</div>
+            <span class="installment-pill" style="margin:2px 0 0;">Oyiga ${formatPrice(getMonthlyInstallment(totalPrice, 12))} so‘mdan</span>
+          </div>
+        </div>
+        <button type="button" class="primary-purple-btn" onclick="completeCheckout()">Rasmiylashtirishga o‘tish</button>
+      `;
+    }
+
+    function completeCheckout() {
+      state.cart = [];
+      saveState();
+      closeCartDrawer();
+      const modal = document.getElementById('authModalContent');
+      modal.innerHTML = `
+        <div style="text-align:center;padding:12px 0;">
+          <div style="width:60px;height:60px;border-radius:50%;background:rgba(0,168,89,0.12);color:var(--uzum-green);font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">✓</div>
+          <h3 style="font-size:22px;font-weight:800;margin-bottom:8px;">Buyurtmangiz qabul qilindi!</h3>
+          <p style="font-size:14px;color:var(--uzum-text-secondary);margin-bottom:20px;">Buyurtmangiz ertaga <strong>${state.city}</strong> shahridagi Uzum topshirish punktiga yetkazib beriladi.</p>
+          <button type="button" class="primary-purple-btn" onclick="closeAuthModal()">Tushunarli</button>
+        </div>
+      `;
+      document.getElementById('authModalBackdrop').classList.remove('hidden');
+    }
+
+    // Favorites Drawer
+    function openFavDrawer() {
+      renderFavDrawer();
+      document.getElementById('favDrawerBackdrop').classList.remove('hidden');
+    }
+
+    function closeFavDrawer() {
+      document.getElementById('favDrawerBackdrop').classList.add('hidden');
+    }
+
+    function renderFavDrawer() {
+      const body = document.getElementById('favDrawerBody');
+      const favProducts = PRODUCTS.filter(p => state.favorites.includes(p.id));
+      document.getElementById('drawerFavTotalItems').textContent = favProducts.length > 0 ? `(${favProducts.length})` : '';
+
+      if (favProducts.length === 0) {
+        body.innerHTML = `
+          <div style="text-align:center;padding:64px 16px;">
+            <div style="width:76px;height:76px;border-radius:50%;background:var(--uzum-surface);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--uzum-purple);font-size:32px;">♡</div>
+            <h3 style="font-size:19px;font-weight:700;margin-bottom:8px;">Sizga yoqqanini qo‘shing</h3>
+            <p style="font-size:13.5px;color:var(--uzum-text-muted);margin-bottom:20px;">Mahsulotdagi ♡ belgisini bosing. Barcha saralangan tovarlar shu yerda saqlanadi.</p>
+            <button type="button" class="primary-purple-btn" style="max-width:220px;" onclick="closeFavDrawer(); showHomeView();">Mahsulotlarni ko‘rish</button>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = favProducts.map(p => `
+        <div class="cart-item">
+          <img class="cart-item-img" src="${p.images[0]}" alt="" style="cursor:pointer;" onclick="closeFavDrawer(); openProductModal('${p.id}')" />
+          <div class="cart-item-info">
+            <div class="cart-item-title" style="cursor:pointer;" onclick="closeFavDrawer(); openProductModal('${p.id}')">${p.title}</div>
+            <div style="font-size:15px;font-weight:700;margin:6px 0 10px;">${formatPrice(p.price)} so‘m</div>
+            <div style="display:flex;gap:8px;">
+              <button type="button" style="flex:1;height:34px;border-radius:8px;background:var(--uzum-purple);color:#FFF;font-size:12.5px;font-weight:600;" onclick="handleAddToCart('${p.id}')">Savatga</button>
+              <button type="button" style="padding:0 12px;height:34px;border-radius:8px;background:var(--uzum-surface);font-size:12.5px;" onclick="handleToggleFavorite('${p.id}')">O‘chirish</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ------------------------------------------------------------------------
+    // J. PRODUCT DETAIL MODAL
+    // ------------------------------------------------------------------------
+    function openProductModal(productId) {
+      const p = PRODUCTS.find(item => item.id === productId);
+      if (!p) return;
+
+      const cat = CATEGORIES.find(c => c.id === p.category);
+      const isFav = state.favorites.includes(p.id);
+      const discount = getDiscountPercent(p.price, p.oldPrice);
+      const monthly = getMonthlyInstallment(p.price, 12);
+
+      document.getElementById('pdModalCategory').textContent = `Uzum Market / ${cat ? cat.name : 'Katalog'}`;
+      document.getElementById('productModalBody').innerHTML = `
+        <div>
+          <div class="pd-gallery-main">
+            <img id="pdMainImg" src="${p.images[0]}" alt="${p.title}" />
+          </div>
+          ${p.images.length > 1 ? `
+            <div class="pd-thumbs">
+              ${p.images.map((img, i) => `
+                <button type="button" class="pd-thumb ${i === 0 ? 'active' : ''}" onclick="document.getElementById('pdMainImg').src='${img}'; document.querySelectorAll('.pd-thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
+                  <img src="${img}" alt="" />
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--uzum-text-muted);margin-bottom:8px;">
+            <span style="color:var(--uzum-text-main);font-weight:600;">★ ${p.rating.toFixed(1)} (${p.reviewCount} sharh)</span>
+            <span>•</span>
+            <span>${formatPrice(p.orders)} ta buyurtma</span>
+          </div>
+
+          <h2 style="font-size:21px;font-weight:700;line-height:1.3;margin-bottom:10px;">${p.title}</h2>
+          <div style="font-size:13px;color:var(--uzum-text-muted);margin-bottom:12px;">Sotuvchi: <strong style="color:var(--uzum-text-main);">${p.seller}</strong></div>
+
+          <div class="pd-price-box">
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+              <span style="font-size:26px;font-weight:800;">${formatPrice(p.price)} so‘m</span>
+              ${p.oldPrice > p.price ? `<span style="font-size:14px;color:var(--uzum-text-muted);text-decoration:line-through;">${formatPrice(p.oldPrice)} so‘m</span>` : ''}
+              ${discount > 0 ? `<span class="micro-badge">-${discount}%</span>` : ''}
+            </div>
+
+            <div style="background:var(--uzum-surface);padding:10px 12px;border-radius:10px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
+              <span class="installment-pill" style="margin:0;font-size:12.5px;">Oyiga ${formatPrice(monthly)} so‘mdan (12 oy)</span>
+              <span style="font-size:12px;color:var(--uzum-text-secondary);">0% boshlang‘ich to‘lov</span>
+            </div>
+
+            <div style="display:flex;gap:10px;">
+              <button type="button" class="primary-purple-btn" onclick="handleAddToCart('${p.id}')">Savatga qo‘shish</button>
+              <button
+                type="button"
+                data-fav-id="${p.id}"
+                onclick="handleToggleFavorite('${p.id}', this)"
+                style="width:48px;height:48px;border-radius:12px;border:1px solid var(--uzum-border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${isFav ? 'var(--uzum-purple)' : 'var(--uzum-text-main)'};"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              </button>
+            </div>
+
+            <div style="margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--uzum-surface);font-size:12.5px;">
+              <strong>🚚 Ertaga bepul yetkazib berish (${state.city})</strong>
+              <div style="color:var(--uzum-text-muted);margin-top:2px;">Uzum topshirish punktiga yoki kuryer orqali</div>
+            </div>
+          </div>
+
+          <h4 style="font-size:15px;font-weight:700;margin-top:14px;">Mahsulot tavsifi</h4>
+          <p style="font-size:13.5px;color:var(--uzum-text-secondary);margin-top:6px;line-height:1.5;">${p.description}</p>
+
+          <h4 style="font-size:15px;font-weight:700;margin-top:16px;">Xususiyatlari</h4>
+          <table class="pd-specs-table">
+            ${Object.entries(p.specs || {}).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+          </table>
+        </div>
+      `;
+
+      document.getElementById('productModalBackdrop').classList.remove('hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModalBackdrop').classList.add('hidden');
+    }
+
+    // ------------------------------------------------------------------------
+    // K. CITY & AUTH MODALS + TOASTS
+    // ------------------------------------------------------------------------
+    function openCityModal() {
+      document.getElementById('cityListGrid').innerHTML = CITIES.map(c => `
+        <button
+          type="button"
+          style="padding:10px 12px;border-radius:10px;text-align:left;font-size:14px;font-weight:${c === state.city ? '700' : '500'};background:${c === state.city ? 'var(--uzum-purple-soft)' : 'var(--uzum-surface)'};color:${c === state.city ? 'var(--uzum-purple)' : 'var(--uzum-text-main)'};"
+          onclick="selectCity('${c}')"
+        >${c} ${c === state.city ? '✓' : ''}</button>
+      `).join('');
+      document.getElementById('cityModalBackdrop').classList.remove('hidden');
+    }
+
+    function closeCityModal() {
+      document.getElementById('cityModalBackdrop').classList.add('hidden');
+    }
+
+    function selectCity(cityName) {
+      state.city = cityName;
+      document.getElementById('selectedCityLabel').textContent = cityName;
+      saveState();
+      closeCityModal();
+      showToast({ title: `Shahar o‘zgartirildi: ${cityName}`, subtitle: '1 kunlik bepul yetkazib berish mavjud' });
+    }
+
+    function openAuthModal() {
+      const box = document.getElementById('authModalContent');
+      if (state.user) {
+        box.innerHTML = `
+          <div style="text-align:center;">
+            <div style="width:56px;height:56px;border-radius:50%;background:var(--uzum-purple);color:#FFF;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">${state.user.name[0]}</div>
+            <h3 style="font-size:20px;font-weight:700;">${state.user.name}</h3>
+            <p style="font-size:13.5px;color:var(--uzum-text-muted);margin:4px 0 18px;">${state.user.phone}</p>
+            <button type="button" class="reset-filter-btn" style="color:var(--uzum-red);" onclick="logoutUser()">Hisobdan chiqish</button>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <h3 style="font-size:21px;font-weight:700;">Uzum Market’ga kirish</h3>
+            <button type="button" class="close-circle-btn" onclick="closeAuthModal()">✕</button>
+          </div>
+          <form onsubmit="submitLogin(event)" style="display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <label style="font-size:12px;color:var(--uzum-text-muted);display:block;margin-bottom:4px;">Ismingiz</label>
+              <input type="text" id="loginNameInput" value="Sardorbek" required style="width:100%;height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--uzum-border-strong);" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--uzum-text-muted);display:block;margin-bottom:4px;">Telefon raqami</label>
+              <input type="tel" id="loginPhoneInput" value="+998 90 123-45-67" required style="width:100%;height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--uzum-border-strong);" />
+            </div>
+            <button type="submit" class="primary-purple-btn" style="margin-top:4px;">Tasdiqlash</button>
+          </form>
+        `;
+      }
+      document.getElementById('authModalBackdrop').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModalBackdrop').classList.add('hidden');
+    }
+
+    function submitLogin(e) {
+      e.preventDefault();
+      const name = document.getElementById('loginNameInput').value.trim() || 'Foydalanuvchi';
+      const phone = document.getElementById('loginPhoneInput').value.trim();
+      state.user = { name, phone };
+      document.getElementById('headerUserLabel').textContent = name;
+      saveState();
+      closeAuthModal();
+      showToast({ title: `Xush kelibsiz, ${name}!`, subtitle: 'Uzum ID orqali tizimga kirdingiz' });
+    }
+
+    function logoutUser() {
+      state.user = null;
+      document.getElementById('headerUserLabel').textContent = 'Kirish';
+      saveState();
+      closeAuthModal();
+    }
+
+    function showToast({ title, subtitle = '', image = '', actionLabel = '', onAction = null }) {
+      const stack = document.getElementById('toastStack');
+      const card = document.createElement('div');
+      card.className = 'toast-card';
+      card.innerHTML = `
+        ${image ? `<img class="toast-thumb" src="${image}" alt="" />` : ''}
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--uzum-text-main);">${title}</div>
+          ${subtitle ? `<div style="font-size:12px;color:var(--uzum-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${subtitle}</div>` : ''}
+          ${actionLabel ? `<button type="button" class="toast-act-btn" style="font-size:12px;font-weight:700;color:var(--uzum-purple);margin-top:2px;">${actionLabel}</button>` : ''}
+        </div>
+      `;
+      if (actionLabel && onAction) {
+        card.querySelector('.toast-act-btn').addEventListener('click', () => {
+          card.remove();
+          onAction();
+        });
+      }
+      stack.appendChild(card);
+      setTimeout(() => card.remove(), 3200);
+    }
+
+    // ------------------------------------------------------------------------
+    // L. BOOTSTRAP APPLICATION
+    // ------------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('selectedCityLabel').textContent = state.city;
+      if (state.user) {
+        document.getElementById('headerUserLabel').textContent = state.user.name;
+      }
+
+      initNavigation();
+      initHeroSlider();
+      initSearch();
+      initCatalogSidebar();
+      renderHomeSections();
+      updateHeaderCounters();
+
+      // Event listeners
+      document.getElementById('katalogToggleBtn').addEventListener('click', toggleMegaMenu);
+      document.getElementById('heroPrevBtn').addEventListener('click', () => {
+        goToHeroSlide(state.heroIndex - 1);
+        startHeroAutoplay();
+      });
+      document.getElementById('heroNextBtn').addEventListener('click', () => {
+        goToHeroSlide(state.heroIndex + 1);
+        startHeroAutoplay();
+      });
+      document.getElementById('popularLoadMoreBtn').addEventListener('click', () => {
+        state.popularVisibleCount += 10;
+        renderHomeSections();
+      });
+
+      document.getElementById('openCityBtn').addEventListener('click', openCityModal);
+      document.getElementById('pickupPointsBtn').addEventListener('click', openCityModal);
+      document.getElementById('openAuthBtn').addEventListener('click', openAuthModal);
+      document.getElementById('openCartDrawerBtn').addEventListener('click', openCartDrawer);
+      document.getElementById('openFavDrawerBtn').addEventListener('click', openFavDrawer);
+
+      document.getElementById('langToggleBtn').addEventListener('click', () => {
+        state.lang = state.lang === 'uz' ? 'ru' : 'uz';
+        document.getElementById('langBadge').textContent = state.lang.toUpperCase();
+        document.getElementById('langLabel').textContent = state.lang === 'uz' ? "O'zbekcha" : 'Русский';
+      });
+
+      // Backdrop click closers
+      document.getElementById('cartDrawerBackdrop').addEventListener('click', closeCartDrawer);
+      document.getElementById('favDrawerBackdrop').addEventListener('click', closeFavDrawer);
+      document.getElementById('productModalBackdrop').addEventListener('click', closeProductModal);
+      document.getElementById('cityModalBackdrop').addEventListener('click', closeCityModal);
+      document.getElementById('authModalBackdrop').addEventListener('click', closeAuthModal);
+    });
+  </script>
+</body>
+</html>
